@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://ipj8001cxwx1"]
+
+[ext_resource type="Script" path="res://Base/Weapons/test_bullet.gd" id="1_t8dje"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_q4pco"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_codnf"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:go_to")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ip1nc"]
+radius = 2.0
+
+[node name="TestBullet" type="Node2D"]
+z_index = 20
+script = ExtResource("1_t8dje")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1, 0.368627, 0, 1)
+position = Vector2(2.38419e-07, 0)
+scale = Vector2(4.00454, 4)
+mesh = SubResource("SphereMesh_q4pco")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_codnf")
+
+[node name="give_damage" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="give_damage"]
+shape = SubResource("CircleShape2D_ip1nc")
+
+[connection signal="body_entered" from="give_damage" to="." method="_on_give_damage_body_entered"]

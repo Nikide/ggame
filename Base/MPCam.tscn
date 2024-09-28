@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btpvjf3pv7ecs"]
+
+[ext_resource type="Script" path="res://Base/mp_cam.gd" id="1_76ymk"]
+
+[node name="MPCam" type="Camera2D"]
+script = ExtResource("1_76ymk")

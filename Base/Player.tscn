@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://ya2grt2vp744"]
+
+[ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
+[ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
+[ext_resource type="Texture2D" uid="uid://bjo3dj58f5t84" path="res://Ass/test_head.png" id="3_pqh7v"]
+[ext_resource type="PackedScene" uid="uid://dnmu3yex6w4l5" path="res://Base/Weapons/test_ak.tscn" id="4_b1dmy"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i63lr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Weapon:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Head:scale")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Weapon:scale")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:alive")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:input_direction")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:input_shot")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:hp")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7q6qg"]
+size = Vector2(26, 96)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6b4p4"]
+bg_color = Color(0.980392, 0, 0.286275, 1)
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_afk5i")
+metadata/can_damage = true
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(4, 0)
+scale = Vector2(0.1875, 0.5)
+texture = ExtResource("2_86kfd")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_i63lr")
+
+[node name="Head" type="Marker2D" parent="."]
+position = Vector2(0, -24)
+
+[node name="TestHead" type="Sprite2D" parent="Head"]
+position = Vector2(0, -16)
+texture = ExtResource("3_pqh7v")
+
+[node name="m_pointer" type="Marker2D" parent="."]
+
+[node name="Icon2" type="Sprite2D" parent="m_pointer"]
+modulate = Color(1, 0.0862745, 1, 1)
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("2_86kfd")
+
+[node name="Weapon" type="Marker2D" parent="."]
+
+[node name="TestAk" parent="Weapon" instance=ExtResource("4_b1dmy")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -16)
+shape = SubResource("RectangleShape2D_7q6qg")
+
+[node name="HPBar" type="ProgressBar" parent="."]
+offset_left = -40.0
+offset_top = -80.0
+offset_right = 40.0
+offset_bottom = -69.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_6b4p4")
+value = 50.0
+show_percentage = false
+
+[node name="RespTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="RespTimer" to="." method="_on_resp_timer_timeout"]

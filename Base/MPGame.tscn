@@ -1,0 +1,112 @@
+[gd_scene load_steps=3 format=3 uid="uid://te84tqtlhh82"]
+
+[ext_resource type="Script" path="res://Base/mp_game.gd" id="1_oso2x"]
+[ext_resource type="PackedScene" uid="uid://btpvjf3pv7ecs" path="res://Base/MPCam.tscn" id="2_0j26l"]
+
+[node name="MPGame" type="Node2D"]
+script = ExtResource("1_oso2x")
+
+[node name="Debug" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Debug"]
+
+[node name="Control" type="Control" parent="Debug/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -832.0
+offset_bottom = -464.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Debug/CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 256.0
+
+[node name="Deb" type="RichTextLabel" parent="Debug/CanvasLayer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+text = "a
+a
+a
+a
+a
+
+a
+a
+a
+a
+a
+a
+a
+a
+a
+aa
+a
+a
+a
+a
+a
+
+a
+a
+a
+a
+"
+scroll_following = true
+
+[node name="Chat" type="Control" parent="Debug/CanvasLayer"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 960.0
+offset_right = 1280.0
+offset_bottom = 192.0
+
+[node name="ChatBox" type="RichTextLabel" parent="Debug/CanvasLayer/Chat"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 200.0
+bbcode_enabled = true
+text = "%CHAT%"
+scroll_following = true
+shortcut_keys_enabled = false
+
+[node name="MPMap" type="Node2D" parent="."]
+z_index = 5
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Base/Player.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="Players" type="Node2D" parent="."]
+z_index = 10
+
+[node name="MapSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Maps/test_map.tscn")
+spawn_path = NodePath("../MPMap")
+
+[node name="StrangeThings" type="Node" parent="."]
+
+[node name="ConnectTimerWait" type="Timer" parent="StrangeThings"]
+wait_time = 5.0
+one_shot = true
+
+[node name="DisconnectTimer" type="Timer" parent="StrangeThings"]
+wait_time = 5.0
+one_shot = true
+
+[node name="DinObjects" type="Node2D" parent="."]
+
+[node name="DinSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Base/Weapons/test_bullet.tscn", "res://Base/VFX/vfx_respawn.tscn")
+spawn_path = NodePath("../DinObjects")
+
+[node name="MPCam" parent="." instance=ExtResource("2_0j26l")]
+
+[connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
+[connection signal="timeout" from="StrangeThings/ConnectTimerWait" to="." method="_on_connect_timer_wait_timeout"]
+[connection signal="timeout" from="StrangeThings/DisconnectTimer" to="." method="_on_dissconect_timer_timeout"]

@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://bmpyc3y0kivmv"]
+
+[node name="Menu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_priority = 5
+
+[node name="Menu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="CanvasLayer/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0807833, 0.0807833, 0.0807833, 1)
+
+[node name="MainBtnsCont" type="VBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -104.0
+offset_right = -704.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/MainBtnsCont"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "GG"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Menu/MainBtnsCont"]
+layout_mode = 2
+text = "(название потом придумать) версия 0.001"
+horizontal_alignment = 1
+
+[node name="FindGame" type="Button" parent="CanvasLayer/Menu/MainBtnsCont"]
+layout_mode = 2
+text = "Поиск игры"
+
+[node name="Settings" type="Button" parent="CanvasLayer/Menu/MainBtnsCont"]
+layout_mode = 2
+text = "Настройки"
+
+[node name="Exit" type="Button" parent="CanvasLayer/Menu/MainBtnsCont"]
+layout_mode = 2
+text = "Выход"
+
+[node name="debug" type="VBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = -80.0
+offset_right = 448.0
+grow_vertical = 0
+
+[node name="db_host" type="Button" parent="CanvasLayer/Menu/debug"]
+layout_mode = 2
+text = "DEBUG HOST LOCAL"
+
+[node name="db_join" type="Button" parent="CanvasLayer/Menu/debug"]
+layout_mode = 2
+text = "DEBUG JOIN LOCAL"
+
+[node name="Copy" type="VBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -368.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/Menu/Copy"]
+layout_mode = 2
+text = "nikide 2024 "
+horizontal_alignment = 2
