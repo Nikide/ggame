@@ -44,6 +44,20 @@ func create_server_ws():
 	peer.create_server(GG.mp_port)
 	init_server(peer)
 	pass
+func create_server_wss():
+	var key = FileAccess.open("/srv/key.key",FileAccess.READ)
+	var crt = FileAccess.open("/srv/cert.crt",FileAccess.READ)
+	var tls = TLSOptions.server(key,crt)
+	peer = WebSocketMultiplayerPeer.new()
+	GG.slog("Создание сервера WSS")
+	peer.create_server(GG.mp_port,"*",tls)
+	init_server(peer)
+	pass
+func join_client_wss():
+	peer = WebSocketMultiplayerPeer.new()
+	GG.slog("Подключение WSS к "+ GG.mp_ip)
+	peer.create_client("wss://"+GG.mp_ip+":"+str(GG.mp_port))
+	init_clinet(peer)	
 func join_client_ws():
 	peer = WebSocketMultiplayerPeer.new()
 	GG.slog("Подключение WS к "+ GG.mp_ip)
@@ -57,6 +71,7 @@ func init_server(peer):
 	multiplayer.peer_disconnected.connect(_player_dis)
 	spawn_map()
 	hide_ls()
+	GG.slog("Init server done")
 	GG.MPDEBUG["PEERID"] = multiplayer.get_unique_id()	
 func create_server():
 	peer = ENetMultiplayerPeer.new()
@@ -70,6 +85,7 @@ func hide_ls():
 	GG.emit_signal("need_ls",false)
 func init_clinet(peer):
 	multiplayer.multiplayer_peer = peer
+	GG.slog("Init client")
 	$StrangeThings/ConnectTimerWait.start()
 	multiplayer.connected_to_server.connect(hide_ls)
 
@@ -93,6 +109,10 @@ func _ready() -> void:
 		create_server_ws()
 	elif GG.mp_state == 11:
 		join_client_ws()
+	elif GG.mp_state == 12:
+		create_server_wss()
+	elif GG.mp_state == 13:
+		join_client_wss()
 	pass # Replace with function body.
 
 

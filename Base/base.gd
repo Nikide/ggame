@@ -22,7 +22,7 @@ func _ready() -> void:
 	if !OS.is_debug_build():
 		$UI/CanvasLayer/Menu/debug.hide()
 	if OS.has_feature("dedicated_server"):
-		GG.mp_state = 10
+		GG.mp_state = 12
 		var mp = debug_mp.instantiate()
 		add_child(mp)
 		MENU.hide()	
@@ -105,7 +105,7 @@ func _on_db_join_ws_pressed() -> void:
 
 
 func _on_temp_join_pressed() -> void:
-	GG.mp_state = 11
+	GG.mp_state = 13
 	GG.mp_ip = $UI/CanvasLayer/Menu/TEMP/HBoxContainer/IP.text
 	GG.mp_port = $UI/CanvasLayer/Menu/TEMP/HBoxContainer/PORT.text.to_int()
 	var mp = debug_mp.instantiate()

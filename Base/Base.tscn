@@ -1050,7 +1050,7 @@ offset_bottom = 456.0
 
 [node name="Label" type="Label" parent="UI/CanvasLayer/Menu/TEMP"]
 layout_mode = 2
-text = "DIRECT JOIN WS"
+text = "DIRECT JOIN WSS"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/CanvasLayer/Menu/TEMP"]
@@ -1062,7 +1062,7 @@ text = "IP:"
 
 [node name="IP" type="LineEdit" parent="UI/CanvasLayer/Menu/TEMP/HBoxContainer"]
 layout_mode = 2
-text = "127.0.0.1"
+text = "nikide.ru"
 placeholder_text = "127.0.0.1"
 expand_to_text_length = true
 
