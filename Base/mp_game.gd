@@ -38,7 +38,7 @@ func spawn_map():
 
 #WSTEST
 
-func create_server_ws():
+func create_server_ws():	
 	peer = WebSocketMultiplayerPeer.new()
 	GG.slog("Создание сервера WS")
 	peer.create_server(GG.mp_port)
@@ -66,12 +66,13 @@ func create_server():
 	#_add_player()
 func hide_ls():
 	connected = true
+	GG.MPDEBUG["PEERID"] = multiplayer.get_unique_id()	
 	GG.emit_signal("need_ls",false)
 func init_clinet(peer):
 	multiplayer.multiplayer_peer = peer
 	$StrangeThings/ConnectTimerWait.start()
 	multiplayer.connected_to_server.connect(hide_ls)
-	GG.MPDEBUG["PEERID"] = multiplayer.get_unique_id()	
+
 func join_client():
 	peer = ENetMultiplayerPeer.new()
 	GG.slog("Подключение ENET к "+ GG.mp_ip)

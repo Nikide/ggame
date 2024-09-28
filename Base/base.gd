@@ -26,6 +26,7 @@ func _ready() -> void:
 		var mp = debug_mp.instantiate()
 		add_child(mp)
 		MENU.hide()	
+	
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
