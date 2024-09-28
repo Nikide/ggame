@@ -55,8 +55,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
-	if multiplayer.is_server():
-		rpc("sync_chat",_mp_chat_text)
-		rpc("send_server_time",Time.get_ticks_msec())
-	pass
+	if multiplayer.multiplayer_peer:
+		if multiplayer.is_server():
+			rpc("sync_chat",_mp_chat_text)
+			rpc("send_server_time",Time.get_ticks_msec())
+		pass

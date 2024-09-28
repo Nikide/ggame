@@ -45,19 +45,37 @@ func create_server_ws():
 	init_server(peer)
 	pass
 func create_server_wss():
-	var key = FileAccess.open("/srv/key.key",FileAccess.READ)
-	var crt = FileAccess.open("/srv/cert.crt",FileAccess.READ)
+	#var key = FileAccess.open("/srv/key.key",FileAccess.READ)
+#	var crt = FileAccess.open("/srv/cert.crt",FileAccess.READ)
+	var key = load("/srv/key.key")
+	var crt = load("/srv/cert.crt")
 	var tls = TLSOptions.server(key,crt)
 	peer = WebSocketMultiplayerPeer.new()
 	GG.slog("Создание сервера WSS")
-	peer.create_server(GG.mp_port,"*",tls)
-	init_server(peer)
+	#print(key.get_as_text())
+	print(crt)
+	print(crt.save_to_string())
+	print(key)
+	print(key.save_to_string())
+	var err = peer.create_server(GG.mp_port,"*",tls)
+	if err == OK:
+		init_server(peer)
+	else:
+		GG.slog("Сервер не создан")
+		push_error(err)
 	pass
 func join_client_wss():
 	peer = WebSocketMultiplayerPeer.new()
 	GG.slog("Подключение WSS к "+ GG.mp_ip)
-	peer.create_client("wss://"+GG.mp_ip+":"+str(GG.mp_port))
-	init_clinet(peer)	
+#	var cert = load("res://cert.crt")
+#	var tls = TLSOptions.client(cert)
+	var err = peer.create_client("wss://"+GG.mp_ip+":"+str(GG.mp_port))
+#	print(tls)
+	if err == OK:
+		init_clinet(peer)
+	else:
+		GG.slog("Подключение WSS к "+ GG.mp_ip+" завершилось с ошибкой")
+		push_error(err)	
 func join_client_ws():
 	peer = WebSocketMultiplayerPeer.new()
 	GG.slog("Подключение WS к "+ GG.mp_ip)
@@ -71,7 +89,7 @@ func init_server(peer):
 	multiplayer.peer_disconnected.connect(_player_dis)
 	spawn_map()
 	hide_ls()
-	GG.slog("Init server done")
+	GG.slog("Сервер создан")
 	GG.MPDEBUG["PEERID"] = multiplayer.get_unique_id()	
 func create_server():
 	peer = ENetMultiplayerPeer.new()
