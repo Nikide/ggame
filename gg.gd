@@ -9,7 +9,7 @@ signal mp_shotfired(from,to)
 signal mp_send_damage_pipe(by,to,dmg)
 signal mp_respawn_pipe(who)
 signal cl_ds(time)
-var _mp_chat_text = "GG Dedicated Server Chat v0.01\n"
+var _mp_chat_text = "-----CHAT INIT-----\n"
 var mp_synchat = ""
 var is_ui_block = false
 var MPDEBUG = {
@@ -36,6 +36,7 @@ func send_server_time(time):
 
 func slog(txt : String):
 	log += "\n"+txt
+	printraw(txt,'\n') #fir console
 	print(txt)
 	pass
 # Called when the node enters the scene tree for the first time.
@@ -49,7 +50,7 @@ func mp_send_shot(from,to,owner,dmg):
 	
 
 func _ready() -> void:
-	slog("GG init done")
+	slog("GG init")
 	pass # Replace with function body.
 
 

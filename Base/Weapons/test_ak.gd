@@ -8,6 +8,7 @@ func _ready() -> void:
 @rpc("call_local")
 func shot_snd():
 	$shot_snd.play()
+	$AnimationPlayer.play("shot_light")
 func shot(owner):
 	#print(multiplayer.get_unique_id(),is_multiplayer_authority())
 	if can_shot:

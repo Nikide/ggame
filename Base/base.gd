@@ -43,6 +43,11 @@ func _process(delta: float) -> void:
 	GG.is_ui_block = MENU.visible
 	pass
 func menu():
+	if MENU.visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if IS_MP:
 		$UI/CanvasLayer/Menu/BG.color.a = 0.8
 	else:
@@ -53,8 +58,10 @@ func menu():
 		if IS_MP:
 			if MENU.visible:
 				MENU.hide()
+			
 			else:
 				MENU.show()
+
 
 func _on_db_host_pressed() -> void:
 	GG.mp_state = 0

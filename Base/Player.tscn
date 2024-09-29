@@ -1,9 +1,33 @@
-[gd_scene load_steps=8 format=3 uid="uid://ya2grt2vp744"]
+[gd_scene load_steps=20 format=3 uid="uid://ya2grt2vp744"]
 
 [ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
 [ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
+[ext_resource type="Texture2D" uid="uid://bmxx1x1m7quyu" path="res://Ass/test-sheet.png" id="2_yasu1"]
 [ext_resource type="Texture2D" uid="uid://bjo3dj58f5t84" path="res://Ass/test_head.png" id="3_pqh7v"]
 [ext_resource type="PackedScene" uid="uid://dnmu3yex6w4l5" path="res://Base/Weapons/test_ak.tscn" id="4_b1dmy"]
+[ext_resource type="AudioStream" uid="uid://c5gwcfqpjtwlo" path="res://Ass/sfx/390757__d00121058__fx_004_footstep_gravel_r.wav" id="6_k8xoa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8frl3"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q64rk"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e728f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8frl3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q64rk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i63lr"]
 properties/0/path = NodePath(".:position")
@@ -33,19 +57,82 @@ properties/7/replication_mode = 1
 properties/8/path = NodePath(".:hp")
 properties/8/spawn = true
 properties/8/replication_mode = 1
+properties/9/path = NodePath("m_pointer:position")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("AnimatedSprite2D3:flip_h")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("AnimatedSprite2D3:frame")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu6en"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcmkf"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0wwd"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvm0d"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kn7oj"]
+atlas = ExtResource("2_yasu1")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ysyje"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu6en")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcmkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0wwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvm0d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kn7oj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ue4hw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7q6qg"]
-size = Vector2(26, 96)
+size = Vector2(32, 64)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6b4p4"]
 bg_color = Color(0.980392, 0, 0.286275, 1)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 10
+y_sort_enabled = true
+collision_layer = 2
 script = ExtResource("1_afk5i")
 metadata/can_damage = true
 
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
+z_index = 41
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_e728f")
+frame_progress = 0.928238
+
 [node name="Icon" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(4, 0)
 scale = Vector2(0.1875, 0.5)
 texture = ExtResource("2_86kfd")
@@ -54,32 +141,51 @@ texture = ExtResource("2_86kfd")
 replication_config = SubResource("SceneReplicationConfig_i63lr")
 
 [node name="Head" type="Marker2D" parent="."]
-position = Vector2(0, -24)
 
 [node name="TestHead" type="Sprite2D" parent="Head"]
+visible = false
 position = Vector2(0, -16)
 texture = ExtResource("3_pqh7v")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Head"]
+z_index = 40
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ysyje")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Head"]
+z_index = 40
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ysyje")
+frame = 2
+
 [node name="m_pointer" type="Marker2D" parent="."]
+z_index = 50
 
 [node name="Icon2" type="Sprite2D" parent="m_pointer"]
-modulate = Color(1, 0.0862745, 1, 1)
+visible = false
 scale = Vector2(0.0625, 0.0625)
 texture = ExtResource("2_86kfd")
 
+[node name="MeshInstance2D" type="MeshInstance2D" parent="m_pointer"]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(0, -8)
+scale = Vector2(5.12955, 5.125)
+mesh = SubResource("SphereMesh_ue4hw")
+
 [node name="Weapon" type="Marker2D" parent="."]
+z_index = 50
+position = Vector2(0, 9)
 
 [node name="TestAk" parent="Weapon" instance=ExtResource("4_b1dmy")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -16)
 shape = SubResource("RectangleShape2D_7q6qg")
 
 [node name="HPBar" type="ProgressBar" parent="."]
 offset_left = -40.0
-offset_top = -80.0
+offset_top = -48.0
 offset_right = 40.0
-offset_bottom = -69.0
+offset_bottom = -37.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_6b4p4")
 value = 50.0
 show_percentage = false
@@ -87,5 +193,9 @@ show_percentage = false
 [node name="RespTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="foot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_k8xoa")
+max_distance = 500.0
 
 [connection signal="timeout" from="RespTimer" to="." method="_on_resp_timer_timeout"]

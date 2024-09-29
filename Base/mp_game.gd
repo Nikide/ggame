@@ -2,12 +2,11 @@ extends Node2D
 var map = 0
 var peer
 var player_scene = preload("res://Base/Player.tscn") 
-var map_scene = preload("res://Maps/test_map.tscn")
+var map_scene = preload("res://Maps/dm_fancy/dm_fancy.tscn")
 var bullet_scene = preload("res://Base/Weapons/test_bullet.tscn")
 var res_vfx_scene = preload("res://Base/VFX/vfx_respawn.tscn")
 var connected = false
 var local_player_init = false
-
 @rpc("call_remote","any_peer")
 func respawn(player):
 	player = $Players.get_node(str(player))
@@ -29,7 +28,7 @@ func spawn_bullet(from,to,owner,dmg):
 	bullet.go_to = to
 	bullet.dmg = dmg
 	bullet.by = owner
-	bullet.name = str(randf_range(0.1,9999999999.99999999))
+	bullet.name = str(randi_range(0,9999999999))
 	$DinObjects.add_child(bullet,1)
 func spawn_map():
 	var smap = map_scene.instantiate()
@@ -45,20 +44,22 @@ func create_server_ws():
 	init_server(peer)
 	pass
 func create_server_wss():
-	#var key = FileAccess.open("/srv/key.key",FileAccess.READ)
-#	var crt = FileAccess.open("/srv/cert.crt",FileAccess.READ)
 	var key = load("/srv/key.key")
 	var crt = load("/srv/cert.crt")
 	var tls = TLSOptions.server(key,crt)
 	peer = WebSocketMultiplayerPeer.new()
 	GG.slog("Создание сервера WSS")
-	#print(key.get_as_text())
-	print(crt)
-	print(crt.save_to_string())
-	print(key)
-	print(key.save_to_string())
+	if crt.save_to_string() :
+		GG.slog("CRT OK")
+	else:
+		GG.slog("CRT BAD")
+	if key.save_to_string() :
+		GG.slog("KEY OK")
+	else:
+		GG.slog("KEY BAD")
 	var err = peer.create_server(GG.mp_port,"*",tls)
 	if err == OK:
+		GG.slog("PEER OK")
 		init_server(peer)
 	else:
 		GG.slog("Сервер не создан")
@@ -136,7 +137,7 @@ func _ready() -> void:
 
 func damage_controler(by,to,dmg):
 	if multiplayer.is_server():
-		print("Damagecntr",by,"|",to,"|",dmg)
+		#print("Damagecntr",by,"|",to,"|",dmg)
 		#TODO Вынести в отельную функцию
 		if $Players.has_node(str(by)):
 			var damaged_node = $Players.get_node(str(to))
@@ -164,6 +165,7 @@ func _process(delta: float) -> void:
 	#print(JSON.stringify(GG.MPDEBUG))
 	if !GG.is_ui_block and local_player_init:
 		_local_input()
+		$MPCam/Ch.global_position = get_global_mouse_position()
 	pass
 	
 func _add_player(id = 1):

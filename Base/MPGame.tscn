@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://te84tqtlhh82"]
+[gd_scene load_steps=4 format=3 uid="uid://te84tqtlhh82"]
 
 [ext_resource type="Script" path="res://Base/mp_game.gd" id="1_oso2x"]
 [ext_resource type="PackedScene" uid="uid://btpvjf3pv7ecs" path="res://Base/MPCam.tscn" id="2_0j26l"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d6i8y"]
 
 [node name="MPGame" type="Node2D"]
 script = ExtResource("1_oso2x")
@@ -86,7 +88,7 @@ spawn_path = NodePath("../Players")
 z_index = 10
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Maps/test_map.tscn")
+_spawnable_scenes = PackedStringArray("res://Maps/test_map.tscn", "res://Maps/dm_fancy/dm_fancy.tscn")
 spawn_path = NodePath("../MPMap")
 
 [node name="StrangeThings" type="Node" parent="."]
@@ -106,6 +108,30 @@ _spawnable_scenes = PackedStringArray("res://Base/Weapons/test_bullet.tscn", "re
 spawn_path = NodePath("../DinObjects")
 
 [node name="MPCam" parent="." instance=ExtResource("2_0j26l")]
+zoom = Vector2(2, 2)
+
+[node name="Ch" type="Node2D" parent="MPCam"]
+z_index = 99
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="MPCam/Ch"]
+position = Vector2(-6, -8.29175)
+scale = Vector2(6, 2)
+mesh = SubResource("BoxMesh_d6i8y")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="MPCam/Ch"]
+position = Vector2(7, -8.29175)
+scale = Vector2(6, 2)
+mesh = SubResource("BoxMesh_d6i8y")
+
+[node name="MeshInstance2D3" type="MeshInstance2D" parent="MPCam/Ch"]
+position = Vector2(0, -15.2917)
+scale = Vector2(2, 5.4165)
+mesh = SubResource("BoxMesh_d6i8y")
+
+[node name="MeshInstance2D4" type="MeshInstance2D" parent="MPCam/Ch"]
+position = Vector2(0, -1.29175)
+scale = Vector2(2, 5.4165)
+mesh = SubResource("BoxMesh_d6i8y")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="StrangeThings/ConnectTimerWait" to="." method="_on_connect_timer_wait_timeout"]

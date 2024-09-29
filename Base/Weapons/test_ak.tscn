@@ -1,13 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnmu3yex6w4l5"]
+[gd_scene load_steps=9 format=3 uid="uid://dnmu3yex6w4l5"]
 
 [ext_resource type="Script" path="res://Base/Weapons/test_ak.gd" id="1_8pqdj"]
 [ext_resource type="Texture2D" uid="uid://k6g5xh38mkha" path="res://Ass/test_gun.png" id="2_drara"]
 [ext_resource type="AudioStream" uid="uid://bejfwbj5klemw" path="res://Ass/test_ak_shot.wav" id="3_s6lpv"]
+[ext_resource type="Texture2D" uid="uid://ijvrnbuqxlqi" path="res://Ass/test_ak2.png" id="4_odc2e"]
+[ext_resource type="Texture2D" uid="uid://cw0qjoswmpwjp" path="res://Ass/2d_lights_and_shadows_neutral_point_light.webp" id="5_b5bff"]
+
+[sub_resource type="Animation" id="Animation_jyooc"]
+resource_name = "shot_light"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_k7poe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_utbnq"]
+_data = {
+"RESET": SubResource("Animation_k7poe"),
+"shot_light": SubResource("Animation_jyooc")
+}
 
 [node name="TestAk" type="Node2D"]
 script = ExtResource("1_8pqdj")
 
 [node name="TestGun" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(16, -1.36424e-12)
 scale = Vector2(0.0612903, 0.0612903)
 texture = ExtResource("2_drara")
@@ -17,12 +57,29 @@ stream = ExtResource("3_s6lpv")
 volume_db = -5.0
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.1
 
 [node name="from" type="Marker2D" parent="."]
-position = Vector2(47, -8)
+position = Vector2(56, -8)
 
 [node name="to" type="Marker2D" parent="."]
+position = Vector2(64, -8)
+
+[node name="TestAk2" type="Sprite2D" parent="."]
+position = Vector2(24, -8)
+scale = Vector2(2, 2)
+texture = ExtResource("4_odc2e")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(56, -8)
+scale = Vector2(0.640625, 0.626065)
+enabled = false
+color = Color(1, 1, 0.396078, 1)
+texture = ExtResource("5_b5bff")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_utbnq")
+}
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
