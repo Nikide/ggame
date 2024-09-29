@@ -41,9 +41,11 @@ func player_process(delta):
 		$m_pointer.global_position +=  ($m_pointer.global_position.direction_to(mouse_pos) * 300) * delta
 	#print($m_pointer.global_position.distance_to(mouse_pos))
 	#Strange way to head rotate
-	$Head.look_at($m_pointer.global_position)
-	$Weapon.look_at($m_pointer.global_position)
-	var left = is_posi($Head.global_position.direction_to($m_pointer.global_position).x)
+	#$Head.look_at($m_pointer.global_position)
+	#$Weapon.look_at($m_pointer.global_position)
+	$Head.look_at(mouse_pos)
+	$Weapon.look_at(mouse_pos)
+	var left = is_posi($Head.global_position.direction_to(mouse_pos).x)
 	if left :
 		$Head.global_rotation = clamp($Head.global_rotation,-PI/4,PI/4)
 		$Head.scale = Vector2(1,1)

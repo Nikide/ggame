@@ -9,12 +9,13 @@ var _tick = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_to = global_position.direction_to(go_to)
+	$MeshInstance2D.look_at(go_to)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
+
 	global_position += (_to* b_speed) * delta
 	_tick +=1
 	if _tick >=500:

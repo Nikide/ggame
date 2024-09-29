@@ -1,16 +1,17 @@
-[gd_scene load_steps=16 format=4 uid="uid://dr2v1glrmkjyg"]
+[gd_scene load_steps=15 format=4 uid="uid://dr2v1glrmkjyg"]
 
-[ext_resource type="Texture2D" uid="uid://beb13kc1g817" path="res://Ass/Dungeon_Tileset.png" id="1_pa7v4"]
 [ext_resource type="Texture2D" uid="uid://cklwbv0kt3fk1" path="res://Maps/dm_fancy/Ass/Texture/TX Tileset Grass.png" id="2_jdx3w"]
 [ext_resource type="Texture2D" uid="uid://bfavnvvlol82g" path="res://Maps/dm_fancy/Ass/Texture/TX Tileset Stone Ground.png" id="3_l55gc"]
 [ext_resource type="Texture2D" uid="uid://bpyjly834sh5p" path="res://Maps/dm_fancy/Ass/Texture/TX Plant.png" id="4_la0kb"]
 [ext_resource type="Texture2D" uid="uid://cet4amyjxg1kf" path="res://Maps/dm_fancy/Ass/Texture/TX Player.png" id="5_x3js8"]
 [ext_resource type="Texture2D" uid="uid://dic6mwdx7r5ny" path="res://Maps/dm_fancy/Ass/Texture/TX Props.png" id="6_npf2u"]
-[ext_resource type="AudioStream" uid="uid://c3fxvhlo40byb" path="res://Maps/dm_fancy/Ass/170515__rolandasb__forest_ambient_01_loop.wav" id="7_kcqod"]
-[ext_resource type="AudioStream" uid="uid://be87gqbpgaq8i" path="res://Maps/dm_fancy/Ass/728559__peterbluewin__3ds-blackcap-monchsgrasmucke-01.wav" id="8_8ej2e"]
+[ext_resource type="AudioStream" uid="uid://bbm5s6n0aabs8" path="res://Maps/dm_fancy/Ass/170515__rolandasb__forest_ambient_01_loop.wav" id="7_kcqod"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gjh8i"]
+load_path = "res://.godot/imported/Dungeon_Tileset.png-b4f6918139cddbd43615bed2aabbc9bc.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q4xge"]
-texture = ExtResource("1_pa7v4")
+texture = SubResource("CompressedTexture2D_gjh8i")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -756,6 +757,5 @@ mix_target = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(880, 584)
-stream = ExtResource("8_8ej2e")
 autoplay = true
 max_distance = 100.0

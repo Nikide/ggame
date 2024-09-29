@@ -165,9 +165,11 @@ func _process(delta: float) -> void:
 	#print(JSON.stringify(GG.MPDEBUG))
 	if !GG.is_ui_block and local_player_init:
 		_local_input()
-		$MPCam/Ch.global_position = get_global_mouse_position()
+		$Ch.global_position = get_global_mouse_position()
 	pass
+#func _physics_process(delta: float) -> void:
 	
+#pass	
 func _add_player(id = 1):
 	var player = player_scene.instantiate()
 	player.name = str(id)

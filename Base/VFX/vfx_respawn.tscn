@@ -1,8 +1,8 @@
 [gd_scene load_steps=19 format=3 uid="uid://cwd214iyv8g7k"]
 
 [ext_resource type="Script" path="res://Base/VFX/vfx_respawn.gd" id="1_ym8uv"]
-[ext_resource type="Texture2D" uid="uid://pljuebr3pess" path="res://Ass/vfx/Free/Part 1/03.png" id="2_2blma"]
-[ext_resource type="AudioStream" uid="uid://coa23popavqpw" path="res://Ass/sfx/respawn.wav" id="3_1kfie"]
+[ext_resource type="Texture2D" uid="uid://pljuebr3pess" path="res://addons/virtual_joystick/Ass/vfx/Free/Part 1/03.png" id="2_2blma"]
+[ext_resource type="AudioStream" uid="uid://coa23popavqpw" path="res://addons/virtual_joystick/Ass/sfx/respawn.wav" id="3_1kfie"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cnplp"]
 atlas = ExtResource("2_2blma")

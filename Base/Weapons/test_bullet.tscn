@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Base/Weapons/test_bullet.gd" id="1_t8dje"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_q4pco"]
+[sub_resource type="QuadMesh" id="QuadMesh_rbt3e"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_codnf"]
 properties/0/path = NodePath(".:position")
@@ -11,19 +11,22 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:go_to")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("MeshInstance2D:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ip1nc"]
-radius = 2.0
+radius = 8.0
 
 [node name="TestBullet" type="Node2D"]
 z_index = 20
 script = ExtResource("1_t8dje")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 0.368627, 0, 1)
-position = Vector2(2.38419e-07, 0)
-scale = Vector2(4.00454, 4)
-mesh = SubResource("SphereMesh_q4pco")
+modulate = Color(0.999756, 0.804943, 0.486731, 1)
+position = Vector2(2.38419e-07, 4.76837e-07)
+scale = Vector2(24.0091, 8)
+mesh = SubResource("QuadMesh_rbt3e")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_codnf")
