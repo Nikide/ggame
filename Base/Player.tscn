@@ -1,28 +1,26 @@
-[gd_scene load_steps=20 format=4 uid="uid://ya2grt2vp744"]
+[gd_scene load_steps=17 format=4 uid="uid://ya2grt2vp744"]
 
 [ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
+[ext_resource type="Texture2D" uid="uid://bxmmln5x2gs5b" path="res://Ass/test-sheet.png" id="2_81ii8"]
 [ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
 [ext_resource type="PackedScene" uid="uid://dnmu3yex6w4l5" path="res://Base/Weapons/test_ak.tscn" id="4_b1dmy"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v14xf"]
-load_path = "res://.godot/imported/test-sheet.png-e9e23400bfd202797b597d234d9ab34c.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8frl3"]
-atlas = SubResource("CompressedTexture2D_v14xf")
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2xhu"]
+atlas = ExtResource("2_81ii8")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q64rk"]
-atlas = SubResource("CompressedTexture2D_v14xf")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5th8c"]
+atlas = ExtResource("2_81ii8")
 region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e728f"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8frl3")
+"texture": SubResource("AtlasTexture_b2xhu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q64rk")
+"texture": SubResource("AtlasTexture_5th8c")
 }],
 "loop": true,
 "name": &"default",
@@ -68,45 +66,23 @@ properties/11/spawn = true
 properties/11/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_75f2g"]
-load_path = "res://.godot/imported/test_head.png-4586b6db05fdbb27aa63f2d9545b967a.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qu6en"]
-atlas = SubResource("CompressedTexture2D_v14xf")
+[sub_resource type="AtlasTexture" id="AtlasTexture_14rkj"]
+atlas = ExtResource("2_81ii8")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dcmkf"]
-atlas = SubResource("CompressedTexture2D_v14xf")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o0wwd"]
-atlas = SubResource("CompressedTexture2D_v14xf")
+[sub_resource type="AtlasTexture" id="AtlasTexture_q66x6"]
+atlas = ExtResource("2_81ii8")
 region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kvm0d"]
-atlas = SubResource("CompressedTexture2D_v14xf")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kn7oj"]
-atlas = SubResource("CompressedTexture2D_v14xf")
-region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ysyje"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qu6en")
+"texture": SubResource("AtlasTexture_14rkj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dcmkf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o0wwd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kvm0d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kn7oj")
+"texture": SubResource("AtlasTexture_q66x6")
 }],
 "loop": true,
 "name": &"default",
@@ -165,9 +141,10 @@ sprite_frames = SubResource("SpriteFrames_ysyje")
 z_index = 40
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ysyje")
-frame = 2
+frame = 1
 
 [node name="m_pointer" type="Marker2D" parent="."]
+visible = false
 z_index = 50
 
 [node name="Icon2" type="Sprite2D" parent="m_pointer"]

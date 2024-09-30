@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://te84tqtlhh82"]
+[gd_scene load_steps=4 format=3 uid="uid://te84tqtlhh82"]
 
 [ext_resource type="Script" path="res://Base/mp_game.gd" id="1_oso2x"]
 [ext_resource type="PackedScene" uid="uid://btpvjf3pv7ecs" path="res://Base/MPCam.tscn" id="2_0j26l"]
-[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="2_oxccq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d6i8y"]
 
@@ -12,17 +11,6 @@ script = ExtResource("1_oso2x")
 [node name="Debug" type="Node" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Debug"]
-
-[node name="Virtual Joystick" parent="Debug/CanvasLayer" instance=ExtResource("2_oxccq")]
-visible = false
-offset_left = 40.0
-offset_top = -348.0
-offset_right = 340.0
-offset_bottom = -48.0
-action_left = "mov_left"
-action_right = "mov_right"
-action_up = "mov_up"
-action_down = "mov_down"
 
 [node name="Control" type="Control" parent="Debug/CanvasLayer"]
 layout_mode = 3
@@ -100,7 +88,7 @@ spawn_path = NodePath("../Players")
 z_index = 10
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Maps/test_map.tscn", "res://Maps/dm_fancy/dm_fancy.tscn")
+_spawnable_scenes = PackedStringArray("res://Maps/dm_fancy/dm_fancy.tscn")
 spawn_path = NodePath("../MPMap")
 
 [node name="StrangeThings" type="Node" parent="."]

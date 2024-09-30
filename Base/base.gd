@@ -13,7 +13,7 @@ func showDS(time = 10):
 	$UI/CanvasLayer/DeadScreen/DSTimer.start()
 	pass
 func _ready() -> void:
-	$UI/CanvasLayer/Loading/AnimatedSprite2D.play("default")
+	#$UI/CanvasLayer/Loading/AnimatedSprite2D.play("default")
 	LD = $UI/CanvasLayer/Loading
 	MENU = $UI/CanvasLayer/Menu
 	LD.hide()

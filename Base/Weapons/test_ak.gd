@@ -1,7 +1,7 @@
 extends Node2D
 
 var can_shot = true
-@export var dmg = 5
+@export var dmg = 10
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
