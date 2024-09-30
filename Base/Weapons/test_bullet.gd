@@ -28,6 +28,8 @@ func _process(delta: float) -> void:
 func _on_give_damage_body_entered(body: Node2D) -> void:
 	#print("Bulet ", body)
 	if str(by) != body.name:
+		#if multiplayer.is_server():
+			#print(str(by),"and",body.name)
 		if body.has_meta("can_damage"):
 			#Бля ну пиздец нахуй так неткод писать ебанутый нахуй
 			#TODO Сделать нормалный посыл дамага

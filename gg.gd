@@ -9,8 +9,10 @@ signal mp_shotfired(from,to)
 signal mp_send_damage_pipe(by,to,dmg)
 signal mp_respawn_pipe(who)
 signal cl_ds(time)
+signal mp_nickname_pipe(id,nick)
 var _mp_chat_text = "-----CHAT INIT-----\n"
 var mp_synchat = ""
+var mp_nickname = "nickname"
 var is_ui_block = false
 var MPDEBUG = {
 	"SERVERTIME": 0,
@@ -21,7 +23,10 @@ func client_showDS(time):
 
 	if multiplayer.get_remote_sender_id() == 1:
 		emit_signal("cl_ds",time)
-			
+@rpc("any_peer")
+func send_nickname(str):
+	print("get nickname from ",multiplayer.get_remote_sender_id())
+	emit_signal("mp_nickname_pipe",multiplayer.get_remote_sender_id(),str)
 func send_chat(text):
 	var time = Time.get_time_dict_from_system()
 	_mp_chat_text += "["+str(time.hour)+":"+str(time.minute)+":"+str(time.second)+"] "+text+"\n"
@@ -36,7 +41,7 @@ func send_server_time(time):
 
 func slog(txt : String):
 	log += "\n"+txt
-	printraw(txt,'\n') #fir console
+	#printraw(txt,'\n') #fir console
 	print(txt)
 	pass
 # Called when the node enters the scene tree for the first time.

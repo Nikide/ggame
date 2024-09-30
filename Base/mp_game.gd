@@ -7,6 +7,9 @@ var bullet_scene = preload("res://Base/Weapons/test_bullet.tscn")
 var res_vfx_scene = preload("res://Base/VFX/vfx_respawn.tscn")
 var connected = false
 var local_player_init = false
+
+func get_nn_by_id(peerid):
+	return $Players.get_node(str(peerid)).nickname
 @rpc("call_remote","any_peer")
 func respawn(player):
 	player = $Players.get_node(str(player))
@@ -21,7 +24,8 @@ func respawn(player):
 	var vfx_resp = res_vfx_scene.instantiate()
 	vfx_resp.global_position = player.global_position
 	$DinObjects.add_child(vfx_resp)
-	GG.send_chat("[color=yellow]"+str(player.name)+"[/color] появился")
+	GG.send_chat("[color=yellow]"+str(player.nickname)+"[/color] появился")
+	
 func spawn_bullet(from,to,owner,dmg):
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = from
@@ -84,6 +88,8 @@ func join_client_ws():
 	init_clinet(peer)
 
 #-----
+func init_nickname(id,nick):
+	$Players.get_node(str(id)).nickname = nick
 func init_server(peer):
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
@@ -100,7 +106,8 @@ func create_server():
 	#_add_player()
 func hide_ls():
 	connected = true
-	GG.MPDEBUG["PEERID"] = multiplayer.get_unique_id()	
+	GG.MPDEBUG["PEERID"] = multiplayer.get_unique_id()
+	GG.rpc_id(1,"send_nickname",GG.mp_nickname)
 	GG.emit_signal("need_ls",false)
 func init_clinet(peer):
 	multiplayer.multiplayer_peer = peer
@@ -120,6 +127,7 @@ func _ready() -> void:
 	GG.connect("mp_shotfired",spawn_bullet)
 	GG.connect("mp_send_damage_pipe",damage_controler)
 	GG.connect("mp_respawn_pipe",respawn)
+	GG.connect("mp_nickname_pipe",init_nickname)
 	if GG.mp_state == 0:
 		create_server()
 	elif GG.mp_state == 1:
@@ -147,7 +155,7 @@ func damage_controler(by,to,dmg):
 				damaged_node.dead()
 				
 				GG.rpc_id(damaged_node.name.to_int(),"client_showDS",damaged_node.get_node("RespTimer").wait_time)
-				GG.send_chat("[color=green]"+str(by)+"[/color] убил [color=red]"+str(to)+"[/color]")
+				GG.send_chat("[color=green]"+get_nn_by_id(by)+"[/color] убил [color=red]"+get_nn_by_id(to)+"[/color]")
 		pass
 
 @rpc("any_peer","call_remote","unreliable")
@@ -155,7 +163,12 @@ func get_input(id,indir,mouse_pos,input_shot):
 	$Players.get_node(str(id)).input_direction = indir
 	$Players.get_node(str(id)).mouse_pos = mouse_pos
 	$Players.get_node(str(id)).input_shot = input_shot
-
+@rpc("any_peer","call_remote","reliable")
+func get_action(id,act_1):
+	if act_1:
+		print("GET ACTION FROM ",id)
+	$Players.get_node(str(id)).action_1 = act_1
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#DEBUG
@@ -167,6 +180,9 @@ func _process(delta: float) -> void:
 		_local_input()
 		$Ch.global_position = get_global_mouse_position()
 	pass
+	if local_player_init:
+		$Debug/CanvasLayer/PlayerUI/VBoxContainer/CLHP.value = $Players.get_node(str(multiplayer.get_unique_id())).hp
+		$Debug/CanvasLayer/PlayerUI/VBoxContainer/ACTP.value = $Players.get_node(str(multiplayer.get_unique_id())).action_point
 #func _physics_process(delta: float) -> void:
 	
 #pass	
@@ -181,6 +197,7 @@ func _add_player(id = 1):
 	player.global_position = mapspwn.get_child(randi_range(0,mapspwn.get_child_count() - 1)).global_position
 	#print(player.global_position)
 	GG.send_chat(str(id)+ " подключен")
+	GG.send_chat("[color=yellow][INFO][/color] [color=green]WASD[/color] передвижение, [color=green]SHIFT[/color] ДЭШ(DASH хуйзнает как правильно)")
 
 func _player_dis(id):
 	GG.send_chat(str(id) + " отключился")
@@ -201,11 +218,14 @@ func _on_dissconect_timer_timeout() -> void:
 	pass # Replace with function body.
 
 func _local_input():
+	#Mov
 	rpc_id(1,"get_input",str(multiplayer.get_unique_id()),
 	Input.get_vector("mov_left", "mov_right", "mov_up", "mov_down"),
 	get_global_mouse_position(),
 	Input.is_action_pressed("shot")
 	)
+	#Action
+	rpc_id(1,"get_action",str(multiplayer.get_unique_id()),Input.is_action_just_pressed("action_1"))
 
 func _on_player_spawner_spawned(node: Node) -> void:
 	#InitLocalPlayer

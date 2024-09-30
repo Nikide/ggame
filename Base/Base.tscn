@@ -211,12 +211,12 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="UI/CanvasLayer/Menu/MainBtnsCont"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "GG"
+text = "GunG"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="UI/CanvasLayer/Menu/MainBtnsCont"]
 layout_mode = 2
-text = "(название потом придумать) версия 0.001"
+text = "версия 0.002"
 horizontal_alignment = 1
 
 [node name="FindGame" type="Button" parent="UI/CanvasLayer/Menu/MainBtnsCont"]
@@ -313,6 +313,19 @@ text = "14880"
 layout_mode = 2
 text = "CONNECT"
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/CanvasLayer/Menu/TEMP"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/CanvasLayer/Menu/TEMP/HBoxContainer2"]
+layout_mode = 2
+text = "Nickname"
+
+[node name="LineEdit" type="LineEdit" parent="UI/CanvasLayer/Menu/TEMP/HBoxContainer2"]
+layout_mode = 2
+text = "xXxNagiBatorxXx"
+placeholder_text = "Типа xxxPIDORxxx"
+expand_to_text_length = true
+
 [node name="DeadScreen" type="Control" parent="UI/CanvasLayer"]
 visible = false
 layout_mode = 3
@@ -374,4 +387,5 @@ one_shot = true
 [connection signal="pressed" from="UI/CanvasLayer/Menu/debug/db_host_ws" to="." method="_on_db_host_ws_pressed"]
 [connection signal="pressed" from="UI/CanvasLayer/Menu/debug/db_join_ws" to="." method="_on_db_join_ws_pressed"]
 [connection signal="pressed" from="UI/CanvasLayer/Menu/TEMP/temp_join" to="." method="_on_temp_join_pressed"]
+[connection signal="text_changed" from="UI/CanvasLayer/Menu/TEMP/HBoxContainer2/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="timeout" from="UI/CanvasLayer/DeadScreen/DSTimer" to="." method="_on_ds_timer_timeout"]

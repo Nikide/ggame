@@ -61,22 +61,22 @@ func menu():
 			
 			else:
 				MENU.show()
-
+func start_mpgame():
+	var mp = debug_mp.instantiate()
+	GG.mp_nickname = $UI/CanvasLayer/Menu/TEMP/HBoxContainer2/LineEdit.text
+	add_child(mp)
+	MENU.hide()
 
 func _on_db_host_pressed() -> void:
 	GG.mp_state = 0
-	var mp = debug_mp.instantiate()
-	add_child(mp)
-	MENU.hide()
+	start_mpgame()
 #	LD.show()
 	pass # Replace with function body.
 
 
 func _on_db_join_pressed() -> void:
 	GG.mp_state = 1
-	var mp = debug_mp.instantiate()
-	add_child(mp)
-	MENU.hide()
+	start_mpgame()
 	pass # Replace with function body.
 
 
@@ -97,17 +97,15 @@ func _on_ds_timer_timeout() -> void:
 
 func _on_db_host_ws_pressed() -> void:
 	GG.mp_state = 10
-	var mp = debug_mp.instantiate()
-	add_child(mp)
-	MENU.hide()
+
+	start_mpgame()
 	pass # Replace with function body.
 
 
 func _on_db_join_ws_pressed() -> void:
 	GG.mp_state = 11
-	var mp = debug_mp.instantiate()
-	add_child(mp)
-	MENU.hide()
+
+	start_mpgame()
 	pass # Replace with function body.
 
 
@@ -115,7 +113,10 @@ func _on_temp_join_pressed() -> void:
 	GG.mp_state = 13
 	GG.mp_ip = $UI/CanvasLayer/Menu/TEMP/HBoxContainer/IP.text
 	GG.mp_port = $UI/CanvasLayer/Menu/TEMP/HBoxContainer/PORT.text.to_int()
-	var mp = debug_mp.instantiate()
-	add_child(mp)
-	MENU.hide()
+	start_mpgame()
+	pass # Replace with function body.
+
+
+func _on_line_edit_text_changed(new_text: String) -> void:
+	GG.mp_nickname = new_text
 	pass # Replace with function body.

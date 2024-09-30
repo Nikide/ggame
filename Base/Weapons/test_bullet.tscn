@@ -15,8 +15,8 @@ properties/2/path = NodePath("MeshInstance2D:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ip1nc"]
-radius = 8.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4g2e"]
+size = Vector2(24, 8)
 
 [node name="TestBullet" type="Node2D"]
 z_index = 20
@@ -36,6 +36,6 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="give_damage"]
-shape = SubResource("CircleShape2D_ip1nc")
+shape = SubResource("RectangleShape2D_l4g2e")
 
 [connection signal="body_entered" from="give_damage" to="." method="_on_give_damage_body_entered"]

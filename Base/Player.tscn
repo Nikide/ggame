@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=4 uid="uid://ya2grt2vp744"]
+[gd_scene load_steps=18 format=4 uid="uid://ya2grt2vp744"]
 
 [ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
 [ext_resource type="Texture2D" uid="uid://bxmmln5x2gs5b" path="res://Ass/test-sheet.png" id="2_81ii8"]
 [ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
 [ext_resource type="PackedScene" uid="uid://dnmu3yex6w4l5" path="res://Base/Weapons/test_ak.tscn" id="4_b1dmy"]
+[ext_resource type="AudioStream" uid="uid://dob0iypvv6be3" path="res://Ass/sfx/701795__perduuus__dash.wav" id="5_6n7sj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2xhu"]
 atlas = ExtResource("2_81ii8")
@@ -64,6 +65,12 @@ properties/10/replication_mode = 1
 properties/11/path = NodePath("AnimatedSprite2D3:frame")
 properties/11/spawn = true
 properties/11/replication_mode = 1
+properties/12/path = NodePath(".:nickname")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath(".:action_point")
+properties/13/spawn = true
+properties/13/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_75f2g"]
 
@@ -109,6 +116,14 @@ y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_afk5i")
 metadata/can_damage = true
+
+[node name="Nickname" type="Label" parent="."]
+offset_left = -80.0
+offset_top = -72.0
+offset_right = 80.0
+offset_bottom = -49.0
+text = "%PLAYER_NAME%"
+horizontal_alignment = 1
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
 z_index = 41
@@ -185,4 +200,24 @@ stream = SubResource("AudioStreamWAV_x6gxr")
 volume_db = -10.0
 max_distance = 500.0
 
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+
+[node name="act_1" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.2
+one_shot = true
+lifetime_randomness = 0.47
+gravity = Vector2(0, 0)
+scale_amount_min = 8.0
+scale_amount_max = 21.2
+color = Color(1, 0.957348, 0.83565, 1)
+
+[node name="dash_snd" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_6n7sj")
+
+[node name="one_sec" type="Timer" parent="."]
+autostart = true
+
 [connection signal="timeout" from="RespTimer" to="." method="_on_resp_timer_timeout"]
+[connection signal="timeout" from="one_sec" to="." method="_on_one_sec_timeout"]

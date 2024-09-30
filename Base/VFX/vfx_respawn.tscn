@@ -147,7 +147,7 @@ z_index = 10
 position = Vector2(-7.62939e-06, -7.62939e-06)
 scale = Vector2(0.6875, 0.6875)
 sprite_frames = SubResource("SpriteFrames_4d5v7")
-frame_progress = 0.999838
+frame_progress = 0.0155703
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 

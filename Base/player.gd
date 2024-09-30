@@ -3,16 +3,32 @@ extends CharacterBody2D
 @export var alive = false
 @export var input_direction = Vector2.ZERO
 @export var mouse_pos = Vector2.ZERO
+@export var action_1 = false
+var can_act = true
 @export var input_shot = false
 @export var hp = 100
+@export var nickname = ""
+@export var action_point = 100
+
+#test_acting
+var _c_act1spd = 0
+var _c_actmaxspd = 6000
+###
+
 
 func _ready() -> void:
 	print(is_multiplayer_authority())
 	if name != str(multiplayer.get_unique_id()):
-		$m_pointer.hide()	
+		$m_pointer.hide()
+	else:
+		$AudioListener2D.make_current()
+		pass
 func _enter_tree() -> void:
 	set_multiplayer_authority(1)
-
+@rpc("any_peer")
+func act_1_efect():
+	$act_1.emitting = true
+	$dash_snd.play()
 func dead():
 	$RespTimer.start()
 
@@ -29,7 +45,7 @@ func get_input():
 	if input_shot:
 		#print("Input",multiplayer.get_unique_id())
 		$Weapon.get_child(0).shot(name)
-	velocity = input_direction * speed
+	velocity = input_direction * (speed + _c_act1spd)
 func player_process(delta):
 	#Бля ну я и проггер ебать
 	if velocity != Vector2.ZERO:
@@ -62,8 +78,15 @@ func checker():
 		if !$foot.playing:
 			$foot.pitch_scale = randf_range(0.95,1.05)
 			$foot.play()
+func act_1():
+	if input_direction and action_point > 40:
+		rpc("act_1_efect")
+		print(velocity)
+		_c_act1spd = _c_actmaxspd
+		action_point = clamp(action_point - 40,0,100)
 func _physics_process(delta):
 	$HPBar.value = hp
+	$Nickname.text = nickname
 	#print(is_multiplayer_authority(),multiplayer.get_unique_id())
 	if alive:
 		checker()
@@ -72,14 +95,35 @@ func _physics_process(delta):
 	else:
 		$CollisionShape2D.disabled = true
 		visible = false
+
+
+		pass
+func not_fps_input():
+	if action_1:
+		act_1()
+	if !(_c_act1spd <= 0):
+		_c_act1spd -= 500
+	else:
+		_c_act1spd = 0
+func _process(delta: float) -> void:
+
 	if is_multiplayer_authority():
 		if alive:
+			
 			get_input()
 			player_process(delta)
-	if multiplayer.is_server():	
-		move_and_slide()
-
-
+	if multiplayer.is_server():
+		if alive:
+			not_fps_input()
+			move_and_slide()
+	pass
 func _on_resp_timer_timeout() -> void:
 	GG.emit_signal("mp_respawn_pipe",name)
+	pass # Replace with function body.
+
+
+func _on_one_sec_timeout() -> void:
+	if multiplayer.is_server():
+		if action_point != 100:
+			action_point = clamp(action_point + 10,0,100)
 	pass # Replace with function body.
