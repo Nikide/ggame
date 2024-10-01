@@ -16,7 +16,7 @@ var mp_nickname = "nickname"
 var is_ui_block = false
 var MPDEBUG = {
 	"SERVERTIME": 0,
-	"PING": 0
+	"SRVDELTA": 0
 }
 @rpc("any_peer")
 func client_showDS(time):
@@ -36,7 +36,7 @@ func sync_chat(chat):
 @rpc("any_peer")
 func send_server_time(time):
 	
-	MPDEBUG["PING"] = str(time-int(MPDEBUG["SERVERTIME"]))
+	MPDEBUG["SRVDELTA"] = str(time-int(MPDEBUG["SERVERTIME"]))
 	MPDEBUG["SERVERTIME"] = str(time)
 
 func slog(txt : String):

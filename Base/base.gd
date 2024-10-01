@@ -14,6 +14,7 @@ func showDS(time = 10):
 	pass
 func _ready() -> void:
 	#$UI/CanvasLayer/Loading/AnimatedSprite2D.play("default")
+	Engine.max_fps = 60
 	LD = $UI/CanvasLayer/Loading
 	MENU = $UI/CanvasLayer/Menu
 	LD.hide()

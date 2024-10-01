@@ -12,7 +12,7 @@ var can_act = true
 
 #test_acting
 var _c_act1spd = 0
-var _c_actmaxspd = 6000
+var _c_actmaxspd = 3000
 ###
 
 
@@ -79,7 +79,7 @@ func checker():
 			$foot.pitch_scale = randf_range(0.95,1.05)
 			$foot.play()
 func act_1():
-	if input_direction and action_point > 40:
+	if input_direction and action_point >= 40:
 		rpc("act_1_efect")
 		print(velocity)
 		_c_act1spd = _c_actmaxspd

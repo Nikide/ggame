@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://bgg8q6fc20lm"]
+
+[ext_resource type="Texture2D" uid="uid://blswxk1jad55e" path="res://Ass/test_pistol.png" id="1_b55sv"]
+[ext_resource type="Script" path="res://Base/Weapons/test_pistol.gd" id="1_kce6f"]
+[ext_resource type="AudioStream" uid="uid://cawf1pn3qmx12" path="res://Ass/sfx/163456__lemudcrab__pistol-shot.wav" id="3_3hw62"]
+
+[sub_resource type="Animation" id="Animation_51ca2"]
+resource_name = "shot"
+length = 0.4
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_3hw62")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TestPistol:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.523599, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_bmw8v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TestPistol:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oyh8s"]
+_data = {
+"RESET": SubResource("Animation_bmw8v"),
+"shot": SubResource("Animation_51ca2")
+}
+
+[node name="TestPistol" type="Node2D"]
+script = ExtResource("1_kce6f")
+
+[node name="TestPistol" type="Sprite2D" parent="."]
+position = Vector2(24, 8)
+scale = Vector2(2, 2)
+texture = ExtResource("1_b55sv")
+offset = Vector2(8, -8)
+
+[node name="from" type="Marker2D" parent="."]
+position = Vector2(64, -8)
+
+[node name="to" type="Marker2D" parent="."]
+position = Vector2(72, -8)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+max_distance = 500.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_oyh8s")
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

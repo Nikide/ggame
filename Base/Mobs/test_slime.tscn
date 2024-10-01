@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://cau4y1omhd5vf"]
+
+[ext_resource type="PackedScene" uid="uid://ckn77142hinj5" path="res://Base/Mobs/MOB_CONTROLLER.tscn" id="1_6rp8r"]
+[ext_resource type="Texture2D" uid="uid://c1gonvpay7uvo" path="res://Base/Mobs/Ass/Sprite-0001.png" id="1_kk2c0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxtnd"]
+atlas = ExtResource("1_kk2c0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y8fp"]
+atlas = ExtResource("1_kk2c0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfo51"]
+atlas = ExtResource("1_kk2c0")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26i5r"]
+atlas = ExtResource("1_kk2c0")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dohsk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxtnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3y8fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfo51")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26i5r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pecms"]
+radius = 128.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_68r0m"]
+radius = 16.0
+
+[node name="TestSlime" type="CharacterBody2D"]
+slide_on_ceiling = false
+
+[node name="MobController" parent="." node_paths=PackedStringArray("trigger_area") instance=ExtResource("1_6rp8r")]
+trigger_area = NodePath("../Area2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dohsk")
+frame_progress = 0.155708
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_pecms")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_68r0m")
+debug_color = Color(0.913965, 0.234011, 0.447263, 0.42)

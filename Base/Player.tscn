@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
 [ext_resource type="Texture2D" uid="uid://bxmmln5x2gs5b" path="res://Ass/test-sheet.png" id="2_81ii8"]
 [ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
-[ext_resource type="PackedScene" uid="uid://dnmu3yex6w4l5" path="res://Base/Weapons/test_ak.tscn" id="4_b1dmy"]
+[ext_resource type="PackedScene" uid="uid://bgg8q6fc20lm" path="res://Base/Weapons/test_pistol.tscn" id="4_s1jxd"]
 [ext_resource type="AudioStream" uid="uid://dob0iypvv6be3" path="res://Ass/sfx/701795__perduuus__dash.wav" id="5_6n7sj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2xhu"]
@@ -113,9 +113,10 @@ stereo = true
 [node name="Player" type="CharacterBody2D"]
 z_index = 10
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 130
 script = ExtResource("1_afk5i")
 metadata/can_damage = true
+metadata/is_player = true
 
 [node name="Nickname" type="Label" parent="."]
 offset_left = -80.0
@@ -177,7 +178,8 @@ mesh = SubResource("SphereMesh_ue4hw")
 z_index = 50
 position = Vector2(0, 9)
 
-[node name="TestAk" parent="Weapon" instance=ExtResource("4_b1dmy")]
+[node name="TestPistol" parent="Weapon" instance=ExtResource("4_s1jxd")]
+position = Vector2(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7q6qg")

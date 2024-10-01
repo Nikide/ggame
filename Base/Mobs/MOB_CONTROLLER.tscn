@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckn77142hinj5"]
+
+[ext_resource type="Script" path="res://Base/Mobs/mob_controller.gd" id="1_bq43x"]
+
+[node name="MobController" type="Node2D"]
+script = ExtResource("1_bq43x")

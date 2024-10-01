@@ -163,7 +163,7 @@ func get_input(id,indir,mouse_pos,input_shot):
 	$Players.get_node(str(id)).input_direction = indir
 	$Players.get_node(str(id)).mouse_pos = mouse_pos
 	$Players.get_node(str(id)).input_shot = input_shot
-@rpc("any_peer","call_remote","reliable")
+@rpc("any_peer","call_remote","unreliable")
 func get_action(id,act_1):
 	if act_1:
 		print("GET ACTION FROM ",id)
@@ -171,6 +171,9 @@ func get_action(id,act_1):
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	$Ch.global_position = get_global_mouse_position()
+	pass
+func _physics_process(delta: float) -> void:
 	#DEBUG
 	GG.MPDEBUG["FPS"] = Engine.get_frames_per_second()   
 	$Debug/CanvasLayer/Control/VBoxContainer/Deb.text = str(JSON.stringify(GG.MPDEBUG,"\t"))
@@ -178,7 +181,7 @@ func _process(delta: float) -> void:
 	#print(JSON.stringify(GG.MPDEBUG))
 	if !GG.is_ui_block and local_player_init:
 		_local_input()
-		$Ch.global_position = get_global_mouse_position()
+		
 	pass
 	if local_player_init:
 		$Debug/CanvasLayer/PlayerUI/VBoxContainer/CLHP.value = $Players.get_node(str(multiplayer.get_unique_id())).hp
