@@ -10,7 +10,7 @@ signal mp_send_damage_pipe(by,to,dmg)
 signal mp_respawn_pipe(who)
 signal cl_ds(time)
 signal mp_nickname_pipe(id,nick)
-var _mp_chat_text = "-----CHAT INIT-----\n"
+var _mp_chat_text = ""
 var mp_synchat = ""
 var mp_nickname = "nickname"
 var is_ui_block = false
@@ -18,6 +18,10 @@ var MPDEBUG = {
 	"SERVERTIME": 0,
 	"SRVDELTA": 0
 }
+
+func test_ping(time):
+	return   Time.get_ticks_msec() - time
+
 @rpc("any_peer")
 func client_showDS(time):
 
@@ -29,7 +33,8 @@ func send_nickname(str):
 	emit_signal("mp_nickname_pipe",multiplayer.get_remote_sender_id(),str)
 func send_chat(text):
 	var time = Time.get_time_dict_from_system()
-	_mp_chat_text += "["+str(time.hour)+":"+str(time.minute)+":"+str(time.second)+"] "+text+"\n"
+	var format_time =  "%02d:%02d:%02d" % [time.hour, time.minute,time.second]
+	_mp_chat_text += format_time+" "+text+"\n"
 @rpc("any_peer")
 func sync_chat(chat):
 	mp_synchat = chat

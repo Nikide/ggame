@@ -23,6 +23,15 @@ func _ready() -> void:
 	else:
 		$AudioListener2D.make_current()
 		pass
+
+@rpc("any_peer")
+func give_weapon(wep_sc : PackedScene):
+	if $Weapon.get_child_count() != 0:
+		$Weapon.get_child(0).queue_free()
+	var weapon = wep_sc.instantiate()
+	weapon.name = name+"WP"+str(Time.get_ticks_msec())
+	$Weapon.add_child(weapon)
+	pass		
 func _enter_tree() -> void:
 	set_multiplayer_authority(1)
 @rpc("any_peer")
@@ -44,7 +53,8 @@ func get_input():
 	
 	if input_shot:
 		#print("Input",multiplayer.get_unique_id())
-		$Weapon.get_child(0).shot(name)
+		if $Weapon.get_child_count() != 0:
+			$Weapon.get_child(0).shot(name)
 	velocity = input_direction * (speed + _c_act1spd)
 func player_process(delta):
 	#Бля ну я и проггер ебать
@@ -126,4 +136,9 @@ func _on_one_sec_timeout() -> void:
 	if multiplayer.is_server():
 		if action_point != 100:
 			action_point = clamp(action_point + 10,0,100)
+	pass # Replace with function body.
+
+
+func _on_wep_spawn_spawned(node: Node) -> void:
+	print(Node)
 	pass # Replace with function body.

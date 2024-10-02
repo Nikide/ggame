@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dnmu3yex6w4l5"]
 
 [ext_resource type="Script" path="res://Base/Weapons/test_ak.gd" id="1_8pqdj"]
-[ext_resource type="Texture2D" uid="uid://cjix4w7wseflj" path="res://Ass/test_ak2.png" id="2_c3mxh"]
+[ext_resource type="Texture2D" uid="uid://bglunfovnwlg8" path="res://Ass/ak_notf_32.png" id="2_hgsq3"]
 [ext_resource type="Texture2D" uid="uid://cw0qjoswmpwjp" path="res://Ass/2d_lights_and_shadows_neutral_point_light.webp" id="3_7e60f"]
 [ext_resource type="AudioStream" uid="uid://bejfwbj5klemw" path="res://Ass/test_ak_shot.wav" id="3_h5nv8"]
 
@@ -74,7 +74,7 @@ script = ExtResource("1_8pqdj")
 [node name="TestGun" type="Sprite2D" parent="."]
 position = Vector2(24, -6)
 scale = Vector2(2, 2)
-texture = ExtResource("2_c3mxh")
+texture = ExtResource("2_hgsq3")
 
 [node name="shot_snd" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_h5nv8")
@@ -84,10 +84,10 @@ volume_db = -5.0
 wait_time = 0.6
 
 [node name="from" type="Marker2D" parent="."]
-position = Vector2(56, -8)
+position = Vector2(56, -16)
 
 [node name="to" type="Marker2D" parent="."]
-position = Vector2(64, -8)
+position = Vector2(64, -16)
 
 [node name="TestAk2" type="Sprite2D" parent="."]
 position = Vector2(24, -8)

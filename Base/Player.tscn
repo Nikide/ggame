@@ -1,9 +1,8 @@
-[gd_scene load_steps=18 format=4 uid="uid://ya2grt2vp744"]
+[gd_scene load_steps=17 format=4 uid="uid://ya2grt2vp744"]
 
 [ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
 [ext_resource type="Texture2D" uid="uid://bxmmln5x2gs5b" path="res://Ass/test-sheet.png" id="2_81ii8"]
 [ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
-[ext_resource type="PackedScene" uid="uid://bgg8q6fc20lm" path="res://Base/Weapons/test_pistol.tscn" id="4_s1jxd"]
 [ext_resource type="AudioStream" uid="uid://dob0iypvv6be3" path="res://Ass/sfx/701795__perduuus__dash.wav" id="5_6n7sj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2xhu"]
@@ -138,6 +137,10 @@ position = Vector2(4, 0)
 scale = Vector2(0.1875, 0.5)
 texture = ExtResource("2_86kfd")
 
+[node name="WepSpawn" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Base/Weapons/test_ak.tscn", "res://Base/Weapons/test_pistol.tscn", "res://Base/Weapons/test_shotgun.tscn")
+spawn_path = NodePath("../Weapon")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_i63lr")
 
@@ -177,9 +180,6 @@ mesh = SubResource("SphereMesh_ue4hw")
 [node name="Weapon" type="Marker2D" parent="."]
 z_index = 50
 position = Vector2(0, 9)
-
-[node name="TestPistol" parent="Weapon" instance=ExtResource("4_s1jxd")]
-position = Vector2(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7q6qg")
@@ -221,5 +221,6 @@ stream = ExtResource("5_6n7sj")
 [node name="one_sec" type="Timer" parent="."]
 autostart = true
 
+[connection signal="spawned" from="WepSpawn" to="." method="_on_wep_spawn_spawned"]
 [connection signal="timeout" from="RespTimer" to="." method="_on_resp_timer_timeout"]
 [connection signal="timeout" from="one_sec" to="." method="_on_one_sec_timeout"]

@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=4 uid="uid://dr2v1glrmkjyg"]
+[gd_scene load_steps=13 format=4 uid="uid://dr2v1glrmkjyg"]
 
 [ext_resource type="Texture2D" uid="uid://cklwbv0kt3fk1" path="res://Maps/dm_fancy/Ass/Texture/TX Tileset Grass.png" id="2_jdx3w"]
 [ext_resource type="Texture2D" uid="uid://bfavnvvlol82g" path="res://Maps/dm_fancy/Ass/Texture/TX Tileset Stone Ground.png" id="3_l55gc"]
 [ext_resource type="Texture2D" uid="uid://bpyjly834sh5p" path="res://Maps/dm_fancy/Ass/Texture/TX Plant.png" id="4_la0kb"]
 [ext_resource type="Texture2D" uid="uid://cet4amyjxg1kf" path="res://Maps/dm_fancy/Ass/Texture/TX Player.png" id="5_x3js8"]
 [ext_resource type="Texture2D" uid="uid://dic6mwdx7r5ny" path="res://Maps/dm_fancy/Ass/Texture/TX Props.png" id="6_npf2u"]
-[ext_resource type="PackedScene" uid="uid://cau4y1omhd5vf" path="res://Base/Mobs/test_slime.tscn" id="7_e0nac"]
 [ext_resource type="AudioStream" uid="uid://bbm5s6n0aabs8" path="res://Maps/dm_fancy/Ass/170515__rolandasb__forest_ambient_01_loop.wav" id="7_kcqod"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyk7n"]
@@ -490,6 +489,3 @@ mix_target = 1
 position = Vector2(880, 584)
 autoplay = true
 max_distance = 100.0
-
-[node name="TestSlime" parent="." instance=ExtResource("7_e0nac")]
-position = Vector2(576, 432)

@@ -25,7 +25,7 @@ func respawn(player):
 	vfx_resp.global_position = player.global_position
 	$DinObjects.add_child(vfx_resp)
 	GG.send_chat("[color=yellow]"+str(player.nickname)+"[/color] появился")
-	
+	player.give_weapon(LoadList.WEAPON_PISTOL)
 func spawn_bullet(from,to,owner,dmg):
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = from
@@ -168,18 +168,52 @@ func get_action(id,act_1):
 	if act_1:
 		print("GET ACTION FROM ",id)
 	$Players.get_node(str(id)).action_1 = act_1
-		
+func cmd_do(cmd,from,cl_time):
+	if cmd == "--killme":
+		damage_controler(from,from,100)
+	elif cmd == "--ping":
+		GG.send_chat("[[color=red]SERVER[/color]] "+get_nn_by_id(from)+"->SERVER = [[color=green]" + str(GG.test_ping(cl_time))+"ms[/color]]")
+	elif cmd == "--giveak":
+		$Players.get_node(str(from)).give_weapon(LoadList.WEAPON_AK)
+	elif cmd == "--giveshotgun":
+		$Players.get_node(str(from)).give_weapon(LoadList.WEAPON_SHOTGUN)
+	else:
+		return 1
+	pass
+@rpc("any_peer")
+func client_send_chat(text : String,cl_time : int):
+	var from = multiplayer.get_remote_sender_id()
+	if !text.begins_with("--"):
+		GG.send_chat("[[color=yellow]"+get_nn_by_id(from)+"[/color]] "+text)
+	else:
+		var _cmd = cmd_do(text,multiplayer.get_remote_sender_id(),cl_time)
+		if _cmd == 1:
+			GG.send_chat("[[color=red]SERVER[/color]] ("+text+") КОМАНД ИЗ ИНВАЛИД")
+		else:
+			GG.send_chat("[[color=yellow]"+get_nn_by_id(from)+"[/color]] "+text)	
+	pass
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	$Ch.global_position = get_global_mouse_position()
+	if Input.is_action_just_pressed("chat"):
+		if $Debug/CanvasLayer/SendChat.visible:
+			$Debug/CanvasLayer/SendChat.hide()
+			if $Debug/CanvasLayer/SendChat/LineEdit.text != "":
+				rpc_id(1,"client_send_chat",$Debug/CanvasLayer/SendChat/LineEdit.text,GG.MPDEBUG["SERVERTIME"].to_int())
+				$Debug/CanvasLayer/SendChat/LineEdit.text = ""
+		else:
+			$Debug/CanvasLayer/SendChat.show()
+			$Debug/CanvasLayer/SendChat/LineEdit.grab_focus()
+			
 	pass
 func _physics_process(delta: float) -> void:
 	#DEBUG
 	GG.MPDEBUG["FPS"] = Engine.get_frames_per_second()   
 	$Debug/CanvasLayer/Control/VBoxContainer/Deb.text = str(JSON.stringify(GG.MPDEBUG,"\t"))
-	$Debug/CanvasLayer/Chat/ChatBox.text = GG.mp_synchat
+	$Debug/CanvasLayer/Chat/ChatBox.text = GG.mp_synchat+"\n"
 	#print(JSON.stringify(GG.MPDEBUG))
-	if !GG.is_ui_block and local_player_init:
+	if !GG.is_ui_block and local_player_init and !$Debug/CanvasLayer/SendChat.visible:
 		_local_input()
 		
 	pass
@@ -199,11 +233,11 @@ func _add_player(id = 1):
 	$Players.add_child(player)
 	player.global_position = mapspwn.get_child(randi_range(0,mapspwn.get_child_count() - 1)).global_position
 	#print(player.global_position)
-	GG.send_chat(str(id)+ " подключен")
-	GG.send_chat("[color=yellow][INFO][/color] [color=green]WASD[/color] передвижение, [color=green]SHIFT[/color] ДЭШ(DASH хуйзнает как правильно)")
+	GG.send_chat("[[color=red]SERVER[/color]] "+str(id)+ " зашел на сервер")
+	#GG.send_chat("[color=yellow][INFO][/color] [color=green]WASD[/color] передвижение, [color=green]SHIFT[/color] ДЭШ(DASH хуйзнает как правильно)")
 
 func _player_dis(id):
-	GG.send_chat(str(id) + " отключился")
+	GG.send_chat("[[color=red]SERVER[/color]] "+str(id)+ " отключился")
 	$Players.get_node(str(id)).queue_free()
 
 func _on_connect_timer_wait_timeout() -> void:
