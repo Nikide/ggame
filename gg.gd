@@ -15,8 +15,6 @@ var mp_synchat = ""
 var mp_nickname = "nickname"
 var is_ui_block = false
 var MPDEBUG = {
-	"SERVERTIME": 0,
-	"SRVDELTA": 0
 }
 
 func test_ping(time):
@@ -68,6 +66,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if multiplayer.multiplayer_peer:
 		if multiplayer.is_server():
-			rpc("sync_chat",_mp_chat_text)
-			rpc("send_server_time",Time.get_ticks_msec())
+			if Engine.get_physics_frames() % 60 == 0:
+				rpc("sync_chat",_mp_chat_text)
+			
+		#	rpc("send_server_time",Time.get_ticks_msec())
 		pass

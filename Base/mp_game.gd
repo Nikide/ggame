@@ -168,11 +168,11 @@ func get_action(id,act_1):
 	if act_1:
 		print("GET ACTION FROM ",id)
 	$Players.get_node(str(id)).action_1 = act_1
-func cmd_do(cmd,from,cl_time):
+func cmd_do(cmd,from):
 	if cmd == "--killme":
 		damage_controler(from,from,100)
 	elif cmd == "--ping":
-		GG.send_chat("[[color=red]SERVER[/color]] "+get_nn_by_id(from)+"->SERVER = [[color=green]" + str(GG.test_ping(cl_time))+"ms[/color]]")
+		ping(from)
 	elif cmd == "--giveak":
 		$Players.get_node(str(from)).give_weapon(LoadList.WEAPON_AK)
 	elif cmd == "--giveshotgun":
@@ -181,12 +181,12 @@ func cmd_do(cmd,from,cl_time):
 		return 1
 	pass
 @rpc("any_peer")
-func client_send_chat(text : String,cl_time : int):
+func client_send_chat(text : String):
 	var from = multiplayer.get_remote_sender_id()
 	if !text.begins_with("--"):
 		GG.send_chat("[[color=yellow]"+get_nn_by_id(from)+"[/color]] "+text)
 	else:
-		var _cmd = cmd_do(text,multiplayer.get_remote_sender_id(),cl_time)
+		var _cmd = cmd_do(text,multiplayer.get_remote_sender_id())
 		if _cmd == 1:
 			GG.send_chat("[[color=red]SERVER[/color]] ("+text+") КОМАНД ИЗ ИНВАЛИД")
 		else:
@@ -200,7 +200,7 @@ func _process(delta: float) -> void:
 		if $Debug/CanvasLayer/SendChat.visible:
 			$Debug/CanvasLayer/SendChat.hide()
 			if $Debug/CanvasLayer/SendChat/LineEdit.text != "":
-				rpc_id(1,"client_send_chat",$Debug/CanvasLayer/SendChat/LineEdit.text,GG.MPDEBUG["SERVERTIME"].to_int())
+				rpc_id(1,"client_send_chat",$Debug/CanvasLayer/SendChat/LineEdit.text)
 				$Debug/CanvasLayer/SendChat/LineEdit.text = ""
 		else:
 			$Debug/CanvasLayer/SendChat.show()
@@ -245,8 +245,16 @@ func _on_connect_timer_wait_timeout() -> void:
 		GG.slog("Нет ответа от сервера... Отключение через 5 секунд")
 		$StrangeThings/DisconnectTimer.start()
 	pass # Replace with function body.
-
-
+@rpc("any_peer")
+func pong(time):
+	var ping = Time.get_ticks_msec() - time
+	GG.send_chat("[[color=red]SERVER[/color]] "+ str(ping)+"ms")
+func ping(to):
+	rpc_id(to,"get_ping",Time.get_ticks_msec())
+	pass
+@rpc("reliable")
+func get_ping(time):
+	rpc_id(1,"pong",time)
 func _on_dissconect_timer_timeout() -> void:
 	multiplayer.multiplayer_peer = null
 	GG.slog("Отключен")
