@@ -21,5 +21,5 @@ func _on_audio_stream_player_2d_finished() -> void:
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	queue_free()
+	if multiplayer.is_server(): queue_free()
 	pass # Replace with function body.

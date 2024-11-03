@@ -27,12 +27,13 @@ func _process(delta: float) -> void:
 
 func _on_give_damage_body_entered(body: Node2D) -> void:
 	#print("Bulet ", body)
-	if str(by) != body.name:
-		#if multiplayer.is_server():
-			#print(str(by),"and",body.name)
-		if body.has_meta("can_damage"):
-			#Бля ну пиздец нахуй так неткод писать ебанутый нахуй
-			#TODO Сделать нормалный посыл дамага
-			GG.emit_signal("mp_send_damage_pipe",by,body.name,dmg)
-		queue_free()
+	if multiplayer.is_server(): #ПРОВЕРЯЕМ ПОПАДАНИЯ ТОЛЬК НА СЕРВЕРЕ
+		if str(by) != body.name:
+			#if multiplayer.is_server():
+				#print(str(by),"and",body.name)
+			if body.has_meta("can_damage"):
+				#Бля ну пиздец нахуй так неткод писать ебанутый нахуй
+				#TODO Сделать нормалный посыл дамага
+				GG.emit_signal("mp_send_damage_pipe",by,body.name,dmg)
+			queue_free()
 	pass # Replace with function body.

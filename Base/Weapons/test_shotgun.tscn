@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://qdbohq0pkg3e"]
+[gd_scene load_steps=10 format=3 uid="uid://qdbohq0pkg3e"]
 
 [ext_resource type="Script" path="res://Base/Weapons/test_shotgun.gd" id="1_pdv16"]
 [ext_resource type="Texture2D" uid="uid://bmlim8a1g3xea" path="res://Ass/ks23_notf _32.png" id="2_v1g17"]
 [ext_resource type="AudioStream" uid="uid://cbercushd6c8o" path="res://Ass/sfx/564480__lumikon__shotgun-shot-sfx.wav" id="3_6xibl"]
+[ext_resource type="Texture2D" uid="uid://bpom1qm2r8ond" path="res://Ass/ggv2/shv2.png" id="4_vp43u"]
 
 [sub_resource type="Animation" id="Animation_5f8ng"]
 length = 0.001
@@ -80,25 +81,41 @@ _data = {
 "shot": SubResource("Animation_vxy8d")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8y03"]
+atlas = ExtResource("4_vp43u")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eb67w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8y03")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="TestShotgun" type="Node2D"]
 script = ExtResource("1_pdv16")
 
 [node name="TestShotgun" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(32, -8)
 scale = Vector2(2, 2)
 texture = ExtResource("2_v1g17")
 
 [node name="from" type="Marker2D" parent="."]
-position = Vector2(58, -14)
+position = Vector2(66, 10)
 
 [node name="to" type="Marker2D" parent="."]
-position = Vector2(122, -22)
+position = Vector2(130, 2)
 
 [node name="to2" type="Marker2D" parent="."]
-position = Vector2(122, -14)
+position = Vector2(130, 10)
 
 [node name="to3" type="Marker2D" parent="."]
-position = Vector2(122, -6)
+position = Vector2(130, 18)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 1.2
@@ -110,5 +127,10 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(32, 8)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_eb67w")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

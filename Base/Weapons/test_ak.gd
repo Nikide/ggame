@@ -3,6 +3,7 @@ extends Node2D
 var can_shot = true
 @export var dmg = 15
 @export var max_bps = 2
+var htype = GG.WEAPHTYPE.TWOHAND
 var local_owm = null
 var _cbps = 0
 # Called when the node enters the scene tree for the first time.

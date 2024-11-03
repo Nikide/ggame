@@ -2,7 +2,7 @@ extends Node2D
 var map = 0
 var peer
 var player_scene = preload("res://Base/Player.tscn") 
-var map_scene = preload("res://Maps/dm_fancy/dm_fancy.tscn")
+var map_scene = preload("res://Maps/dm_td/dm_td.tscn")
 var bullet_scene = preload("res://Base/Weapons/test_bullet.tscn")
 var res_vfx_scene = preload("res://Base/VFX/vfx_respawn.tscn")
 var connected = false
@@ -17,26 +17,36 @@ func respawn(player):
 	player.hp = 100
 	#Spawns TODO Сделать нормально
 	var mapspwn = $MPMap.get_child(0).get_node("Spawns")
-	#print(player.global_position)
-	#$Players.add_child(player)
 	player.global_position = mapspwn.get_child(randi_range(0,mapspwn.get_child_count() - 1)).global_position
-	print(player.global_position)
 	var vfx_resp = res_vfx_scene.instantiate()
 	vfx_resp.global_position = player.global_position
 	$DinObjects.add_child(vfx_resp)
 	GG.send_chat("[color=yellow]"+str(player.nickname)+"[/color] появился")
 	player.give_weapon(LoadList.WEAPON_PISTOL)
-func spawn_bullet(from,to,owner,dmg):
+func spawn_bullet(from,to,own,dmg):
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = from
 	bullet.go_to = to
 	bullet.dmg = dmg
-	bullet.by = owner
-	bullet.name = str(randi_range(0,9999999999))
+	bullet.by = own
+	bullet.name = str(Time.get_ticks_usec()+randi_range(0,Time.get_ticks_usec()))
 	$DinObjects.add_child(bullet,1)
 func spawn_map():
 	var smap = map_scene.instantiate()
 	$MPMap.add_child(smap)
+
+#WEBRTC?
+func create_server_wrtc():	
+	peer = WebRTCMultiplayerPeer.new()
+	GG.slog("Создание сервера WebRTC")
+	peer.create_server()
+	init_server(peer)
+	pass
+func join_client_wrtc():
+	peer = WebRTCMultiplayerPeer.new()
+	GG.slog("Подключение WEBRTC к "+ GG.mp_ip)
+	peer.create_client()
+	init_clinet(peer)
 
 
 #WSTEST
@@ -128,18 +138,22 @@ func _ready() -> void:
 	GG.connect("mp_send_damage_pipe",damage_controler)
 	GG.connect("mp_respawn_pipe",respawn)
 	GG.connect("mp_nickname_pipe",init_nickname)
-	if GG.mp_state == 0:
+	if GG.mp_state == GG.CONMODE.ENET_SERVER:
 		create_server()
-	elif GG.mp_state == 1:
+	elif GG.mp_state == GG.CONMODE.ENET_CLIENT:
 		join_client()
-	elif GG.mp_state == 10:
+	elif GG.mp_state == GG.CONMODE.WS_SERVER:
 		create_server_ws()
-	elif GG.mp_state == 11:
+	elif GG.mp_state == GG.CONMODE.WS_CLIENT:
 		join_client_ws()
-	elif GG.mp_state == 12:
+	elif GG.mp_state == GG.CONMODE.WSS_SERVER:
 		create_server_wss()
-	elif GG.mp_state == 13:
+	elif GG.mp_state == GG.CONMODE.WSS_CLIENT:
 		join_client_wss()
+	elif GG.mp_state == GG.CONMODE.WRTC_SERVER:
+		create_server_wrtc()
+	elif GG.mp_state == GG.CONMODE.WRTC_CLIENT:
+		join_client_wrtc()
 	pass # Replace with function body.
 
 

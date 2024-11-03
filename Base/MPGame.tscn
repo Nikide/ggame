@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://te84tqtlhh82"]
+[gd_scene load_steps=11 format=3 uid="uid://te84tqtlhh82"]
 
 [ext_resource type="Script" path="res://Base/mp_game.gd" id="1_oso2x"]
 [ext_resource type="PackedScene" uid="uid://btpvjf3pv7ecs" path="res://Base/MPCam.tscn" id="2_0j26l"]
 [ext_resource type="Texture2D" uid="uid://bxmmln5x2gs5b" path="res://Ass/test-sheet.png" id="2_6t8iv"]
+[ext_resource type="Texture2D" uid="uid://bx3abafr3y3k2" path="res://Ass/ggv2/tdv3_img.png" id="3_wnno6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kw0cx"]
 bg_color = Color(0.983006, 0, 0, 1)
@@ -14,6 +15,10 @@ bg_color = Color(2.02149e-06, 0.703171, 0.551357, 1)
 atlas = ExtResource("2_6t8iv")
 region = Rect2(32, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtnll"]
+atlas = ExtResource("3_wnno6")
+region = Rect2(0, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_v6cww"]
 animations = [{
 "frames": [{
@@ -22,6 +27,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtnll")
+}],
+"loop": true,
+"name": &"new_animation",
 "speed": 5.0
 }]
 
@@ -33,6 +46,7 @@ script = ExtResource("1_oso2x")
 [node name="Debug" type="Node" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Debug"]
+layer = 2
 
 [node name="Control" type="Control" parent="Debug/CanvasLayer"]
 layout_mode = 3
@@ -52,6 +66,7 @@ offset_bottom = 256.0
 [node name="Deb" type="RichTextLabel" parent="Debug/CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
 text = "a
 a
 a
@@ -147,9 +162,11 @@ value = 50.0
 rounded = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Debug/CanvasLayer/PlayerUI"]
-position = Vector2(-40, 56)
-scale = Vector2(5, 5)
+visible = false
+position = Vector2(-40, 32)
+scale = Vector2(0.8125, 0.8125)
 sprite_frames = SubResource("SpriteFrames_v6cww")
+animation = &"new_animation"
 
 [node name="SendChat" type="Control" parent="Debug/CanvasLayer"]
 visible = false
@@ -190,7 +207,7 @@ spawn_path = NodePath("../Players")
 z_index = 10
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Maps/dm_fancy/dm_fancy.tscn")
+_spawnable_scenes = PackedStringArray("res://Maps/dm_fancy/dm_fancy.tscn", "res://Maps/dm_td/dm_td.tscn")
 spawn_path = NodePath("../MPMap")
 
 [node name="StrangeThings" type="Node" parent="."]
@@ -233,9 +250,8 @@ scale = Vector2(2, 5.4165)
 mesh = SubResource("BoxMesh_d6i8y")
 
 [node name="MPCam" parent="." instance=ExtResource("2_0j26l")]
+zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
 drag_top_margin = 0.1
 drag_bottom_margin = 0.1
 

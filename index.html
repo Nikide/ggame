@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Template</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <script src="$GODOT_URL"></script>
+        <script>
+            var engine = new Engine($GODOT_CONFIG);
+function printProgress(current, total) {
+    console.log("Loaded " + current + " of " + total + " bytes");
+}
+engine.startGame({ onProgress: printProgress });
+
+        </script>
+    </body>
+</html>

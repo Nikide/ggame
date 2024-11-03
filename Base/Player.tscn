@@ -1,9 +1,16 @@
-[gd_scene load_steps=17 format=4 uid="uid://ya2grt2vp744"]
+[gd_scene load_steps=29 format=4 uid="uid://ya2grt2vp744"]
 
 [ext_resource type="Script" path="res://Base/player.gd" id="1_afk5i"]
 [ext_resource type="Texture2D" uid="uid://bxmmln5x2gs5b" path="res://Ass/test-sheet.png" id="2_81ii8"]
 [ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="2_86kfd"]
+[ext_resource type="Texture2D" uid="uid://sfs70angyd7g" path="res://Ass/ggv2/test_body.png" id="3_yf45h"]
+[ext_resource type="Texture2D" uid="uid://4crvana726t" path="res://Ass/ggv2/test_gg_head.png" id="4_fg5b8"]
+[ext_resource type="Texture2D" uid="uid://cc0oldwjtcym" path="res://Ass/ggv2/test_body-sheet.png" id="4_uutq2"]
 [ext_resource type="AudioStream" uid="uid://dob0iypvv6be3" path="res://Ass/sfx/701795__perduuus__dash.wav" id="5_6n7sj"]
+[ext_resource type="Texture2D" uid="uid://ca4md3ia66ytf" path="res://Ass/ggv2/test_hand.png" id="7_cnt0h"]
+[ext_resource type="Texture2D" uid="uid://fx4eret2jw1f" path="res://Ass/ggv2/test_gg_head-sheet.png" id="7_emc1g"]
+[ext_resource type="Texture2D" uid="uid://0yt1kre7cv4k" path="res://Ass/ggv2/tdv3_onehand1.png" id="10_4jaup"]
+[ext_resource type="Texture2D" uid="uid://d11oml7cl8ab4" path="res://Ass/ggv2/tdv3_twohand1.png" id="11_c0koy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2xhu"]
 atlas = ExtResource("2_81ii8")
@@ -12,6 +19,14 @@ region = Rect2(96, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5th8c"]
 atlas = ExtResource("2_81ii8")
 region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4oaf"]
+atlas = ExtResource("3_yf45h")
+region = Rect2(0, 0, 106, 193)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfqnf"]
+atlas = ExtResource("4_uutq2")
+region = Rect2(0, 0, 17, 45)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e728f"]
 animations = [{
@@ -25,6 +40,22 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4oaf")
+}],
+"loop": true,
+"name": &"v2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfqnf")
+}],
+"loop": true,
+"name": &"v22",
+"speed": 5.0
 }]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i63lr"]
@@ -70,6 +101,12 @@ properties/12/replication_mode = 1
 properties/13/path = NodePath(".:action_point")
 properties/13/spawn = true
 properties/13/replication_mode = 1
+properties/14/path = NodePath("tdv2body:rotation")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("tdv2body/AnimatedSprite2D:animation")
+properties/15/spawn = true
+properties/15/replication_mode = 1
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_75f2g"]
 
@@ -80,6 +117,14 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_q66x6"]
 atlas = ExtResource("2_81ii8")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1v02"]
+atlas = ExtResource("4_fg5b8")
+region = Rect2(0, 0, 98, 114)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htuh6"]
+atlas = ExtResource("7_emc1g")
+region = Rect2(0, 0, 32, 37)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ysyje"]
 animations = [{
@@ -92,6 +137,22 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1v02")
+}],
+"loop": true,
+"name": &"v2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htuh6")
+}],
+"loop": true,
+"name": &"v22",
 "speed": 5.0
 }]
 
@@ -108,6 +169,25 @@ data = PackedByteArray("EQCv/+b/9f/W/wEA7P/N/+n/4f/m/y0AAwAiABUA5P8EAML/6//u/+n/
 format = 1
 mix_rate = 48000
 stereo = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g3cxg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_4jaup")
+}],
+"loop": true,
+"name": &"1h",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_c0koy")
+}],
+"loop": true,
+"name": &"2h",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 10
@@ -126,10 +206,18 @@ text = "%PLAYER_NAME%"
 horizontal_alignment = 1
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
-z_index = 41
+visible = false
+z_index = 39
+position = Vector2(-2, 4)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_e728f")
-frame_progress = 0.928238
+
+[node name="TestHand" type="Sprite2D" parent="AnimatedSprite2D3"]
+visible = false
+z_index = 45
+position = Vector2(-24, -24)
+scale = Vector2(0.862245, 0.862245)
+texture = ExtResource("7_cnt0h")
 
 [node name="Icon" type="Sprite2D" parent="."]
 visible = false
@@ -145,6 +233,7 @@ spawn_path = NodePath("../Weapon")
 replication_config = SubResource("SceneReplicationConfig_i63lr")
 
 [node name="Head" type="Marker2D" parent="."]
+position = Vector2(-3, 0)
 
 [node name="TestHead" type="Sprite2D" parent="Head"]
 visible = false
@@ -152,11 +241,15 @@ position = Vector2(0, -16)
 texture = SubResource("CompressedTexture2D_75f2g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Head"]
+visible = false
 z_index = 40
-scale = Vector2(2, 2)
+position = Vector2(-1, -11)
+scale = Vector2(1.34375, 1.34375)
 sprite_frames = SubResource("SpriteFrames_ysyje")
+animation = &"v22"
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Head"]
+visible = false
 z_index = 40
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ysyje")
@@ -167,11 +260,11 @@ visible = false
 z_index = 50
 
 [node name="Icon2" type="Sprite2D" parent="m_pointer"]
-visible = false
 scale = Vector2(0.0625, 0.0625)
 texture = ExtResource("2_86kfd")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="m_pointer"]
+visible = false
 modulate = Color(1, 0, 0, 1)
 position = Vector2(0, -8)
 scale = Vector2(5.12955, 5.125)
@@ -179,9 +272,9 @@ mesh = SubResource("SphereMesh_ue4hw")
 
 [node name="Weapon" type="Marker2D" parent="."]
 z_index = 50
-position = Vector2(0, 9)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_7q6qg")
 
 [node name="HPBar" type="ProgressBar" parent="."]
@@ -220,6 +313,12 @@ stream = ExtResource("5_6n7sj")
 
 [node name="one_sec" type="Timer" parent="."]
 autostart = true
+
+[node name="tdv2body" type="Marker2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="tdv2body"]
+sprite_frames = SubResource("SpriteFrames_g3cxg")
+animation = &"2h"
 
 [connection signal="spawned" from="WepSpawn" to="." method="_on_wep_spawn_spawned"]
 [connection signal="timeout" from="RespTimer" to="." method="_on_resp_timer_timeout"]

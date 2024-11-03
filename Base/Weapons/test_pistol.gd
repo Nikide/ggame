@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var dmg = 10
+var htype = GG.WEAPHTYPE.ONEHAND
 var _can_shot = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

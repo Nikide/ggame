@@ -26,11 +26,12 @@ func _ready() -> void:
 
 @rpc("any_peer")
 func give_weapon(wep_sc : PackedScene):
-	if $Weapon.get_child_count() != 0:
-		$Weapon.get_child(0).queue_free()
-	var weapon = wep_sc.instantiate()
-	weapon.name = name+"WP"+str(Time.get_ticks_msec())
-	$Weapon.add_child(weapon)
+	if multiplayer.is_server():
+		if $Weapon.get_child_count() != 0:
+			$Weapon.get_child(0).queue_free()
+		var weapon = wep_sc.instantiate()
+		weapon.name = name+"WP"+str(Time.get_ticks_msec())
+		$Weapon.add_child(weapon)
 	pass		
 func _enter_tree() -> void:
 	set_multiplayer_authority(1)
@@ -58,8 +59,15 @@ func get_input():
 	velocity = input_direction * (speed + _c_act1spd)
 func player_process(delta):
 	#Бля ну я и проггер ебать
+	$tdv2body.look_at(mouse_pos)
+	if $Weapon.get_child_count() != 0:
+		if $Weapon.get_child(0).htype == GG.WEAPHTYPE.ONEHAND:
+			$tdv2body/AnimatedSprite2D.play("1h")
+		elif  $Weapon.get_child(0).htype == GG.WEAPHTYPE.TWOHAND:
+			$tdv2body/AnimatedSprite2D.play("2h")
 	if velocity != Vector2.ZERO:
-		$AnimatedSprite2D3.play("default")
+		#$AnimatedSprite2D3.play("default")
+		pass
 	else:
 		$AnimatedSprite2D3.stop()
 		$AnimatedSprite2D3.frame = 0
@@ -75,12 +83,12 @@ func player_process(delta):
 	if left :
 		$Head.global_rotation = clamp($Head.global_rotation,-PI/4,PI/4)
 		$Head.scale = Vector2(1,1)
-		$Weapon.scale = Vector2(1,1)
+		#$Weapon.scale = Vector2(1,1)
 		$AnimatedSprite2D3.flip_h = false
 	else:
 		$Head.global_rotation = clamp($Head.global_rotation,-PI/4,PI/4)
 		$Head.scale = Vector2(-1,1)
-		$Weapon.scale = Vector2(1,-1)
+		#$Weapon.scale = Vector2(1,-1)
 		$AnimatedSprite2D3.flip_h = true
 #TODO сделать нормально		
 func checker():

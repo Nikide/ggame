@@ -1,5 +1,19 @@
 extends Node
 
+enum CONMODE {
+	ENET_SERVER,
+	ENET_CLIENT,
+	WS_SERVER,
+	WS_CLIENT,
+	WSS_SERVER,
+	WSS_CLIENT,
+	WRTC_SERVER,
+	WRTC_CLIENT
+}
+enum WEAPHTYPE {
+	ONEHAND,
+	TWOHAND
+}
 var log = ""
 var mp_state = 0
 var mp_ip = "localhost"

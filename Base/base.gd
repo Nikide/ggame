@@ -23,11 +23,11 @@ func _ready() -> void:
 	if !OS.is_debug_build():
 		$UI/CanvasLayer/Menu/debug.hide()
 	if OS.has_feature("dedicated_server"):
-		GG.mp_state = 12
+		GG.mp_state = GG.CONMODE.WSS_SERVER
 		var mp = debug_mp.instantiate()
 		add_child(mp)
 		MENU.hide()	
-	
+		
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -69,14 +69,14 @@ func start_mpgame():
 	MENU.hide()
 
 func _on_db_host_pressed() -> void:
-	GG.mp_state = 0
+	GG.mp_state = GG.CONMODE.ENET_SERVER
 	start_mpgame()
 #	LD.show()
 	pass # Replace with function body.
 
 
 func _on_db_join_pressed() -> void:
-	GG.mp_state = 1
+	GG.mp_state = GG.CONMODE.ENET_CLIENT
 	start_mpgame()
 	pass # Replace with function body.
 
@@ -97,21 +97,21 @@ func _on_ds_timer_timeout() -> void:
 
 
 func _on_db_host_ws_pressed() -> void:
-	GG.mp_state = 10
+	GG.mp_state = GG.CONMODE.WS_SERVER
 
 	start_mpgame()
 	pass # Replace with function body.
 
 
 func _on_db_join_ws_pressed() -> void:
-	GG.mp_state = 11
+	GG.mp_state = GG.CONMODE.WS_CLIENT
 
 	start_mpgame()
 	pass # Replace with function body.
 
 
 func _on_temp_join_pressed() -> void:
-	GG.mp_state = 13
+	GG.mp_state = GG.CONMODE.WSS_CLIENT
 	GG.mp_ip = $UI/CanvasLayer/Menu/TEMP/HBoxContainer/IP.text
 	GG.mp_port = $UI/CanvasLayer/Menu/TEMP/HBoxContainer/PORT.text.to_int()
 	start_mpgame()
@@ -120,4 +120,18 @@ func _on_temp_join_pressed() -> void:
 
 func _on_line_edit_text_changed(new_text: String) -> void:
 	GG.mp_nickname = new_text
+	pass # Replace with function body.
+
+
+func _on_db_wrtc_host_pressed() -> void:
+	GG.mp_state = GG.CONMODE.WRTC_SERVER
+
+	start_mpgame()
+	pass # Replace with function body.
+
+
+func _on_db_wrtc_join_pressed() -> void:
+	GG.mp_state = GG.CONMODE.WRTC_CLIENT
+
+	start_mpgame()
 	pass # Replace with function body.
