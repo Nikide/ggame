@@ -23,6 +23,14 @@ func respawn(player):
 	$DinObjects.add_child(vfx_resp)
 	GG.send_chat("[color=yellow]"+str(player.nickname)+"[/color] появился")
 	player.give_weapon(LoadList.WEAPON_PISTOL)
+func spawn_mob():
+	var mob = LoadList.MOBS["test"].instantiate()
+	var mapspwn = $MPMap.get_child(0).get_node("Spawns")
+	mob.global_position = mapspwn.get_child(randi_range(0,mapspwn.get_child_count() - 1)).global_position
+	var vfx_resp = res_vfx_scene.instantiate()
+	vfx_resp.global_position = mob.global_position
+	$DinObjects.add_child(vfx_resp)
+	$Mobs.add_child(mob)
 func spawn_bullet(from,to,own,dmg):
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = from
@@ -191,6 +199,8 @@ func cmd_do(cmd,from):
 		$Players.get_node(str(from)).give_weapon(LoadList.WEAPON_AK)
 	elif cmd == "--giveshotgun":
 		$Players.get_node(str(from)).give_weapon(LoadList.WEAPON_SHOTGUN)
+	elif cmd == "--addmob":
+		spawn_mob()
 	else:
 		return 1
 	pass

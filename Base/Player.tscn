@@ -159,7 +159,7 @@ animations = [{
 [sub_resource type="SphereMesh" id="SphereMesh_ue4hw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7q6qg"]
-size = Vector2(32, 64)
+size = Vector2(32, 32)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6b4p4"]
 bg_color = Color(0.980392, 0, 0.286275, 1)
@@ -274,7 +274,6 @@ mesh = SubResource("SphereMesh_ue4hw")
 z_index = 50
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_7q6qg")
 
 [node name="HPBar" type="ProgressBar" parent="."]

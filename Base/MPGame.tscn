@@ -147,16 +147,22 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -92.0
+offset_top = 32.0
+offset_right = -314.0
+offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CLHP" type="ProgressBar" parent="Debug/CanvasLayer/PlayerUI/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 theme_override_styles/fill = SubResource("StyleBoxFlat_kw0cx")
 value = 50.0
 
 [node name="ACTP" type="ProgressBar" parent="Debug/CanvasLayer/PlayerUI/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 10
 theme_override_styles/fill = SubResource("StyleBoxFlat_vpmm6")
 value = 50.0
 rounded = true
@@ -250,10 +256,15 @@ scale = Vector2(2, 5.4165)
 mesh = SubResource("BoxMesh_d6i8y")
 
 [node name="MPCam" parent="." instance=ExtResource("2_0j26l")]
-zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 drag_top_margin = 0.1
 drag_bottom_margin = 0.1
+
+[node name="Mobs" type="Node2D" parent="."]
+
+[node name="MobSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Base/Mobs/test_slime.tscn")
+spawn_path = NodePath("../Mobs")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="StrangeThings/ConnectTimerWait" to="." method="_on_connect_timer_wait_timeout"]

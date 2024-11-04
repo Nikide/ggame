@@ -3,6 +3,10 @@ extends Node
 const WEAPON_AK = preload("res://Base/Weapons/test_ak.tscn")
 const WEAPON_SHOTGUN = preload("res://Base/Weapons/test_shotgun.tscn")
 const WEAPON_PISTOL = preload("res://Base/Weapons/test_pistol.tscn")
+
+const MOBS = {
+	"test" : preload("res://Base/Mobs/test_slime.tscn")
+}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cau4y1omhd5vf"]
+[gd_scene load_steps=13 format=3 uid="uid://cau4y1omhd5vf"]
 
 [ext_resource type="PackedScene" uid="uid://ckn77142hinj5" path="res://Base/Mobs/MOB_CONTROLLER.tscn" id="1_6rp8r"]
 [ext_resource type="Texture2D" uid="uid://c1gonvpay7uvo" path="res://Base/Mobs/Ass/Sprite-0001.png" id="1_kk2c0"]
+[ext_resource type="PackedScene" uid="uid://bgg8q6fc20lm" path="res://Base/Weapons/test_pistol.tscn" id="3_e7aon"]
+[ext_resource type="Texture2D" uid="uid://c70o2hlt6hke2" path="res://icon.svg" id="4_8unvu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bxtnd"]
 atlas = ExtResource("1_kk2c0")
@@ -45,13 +47,23 @@ radius = 128.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_68r0m"]
 radius = 16.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_juyck"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Weapon:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="TestSlime" type="CharacterBody2D"]
+z_index = 999
 slide_on_ceiling = false
 
 [node name="MobController" parent="." node_paths=PackedStringArray("trigger_area") instance=ExtResource("1_6rp8r")]
 trigger_area = NodePath("../Area2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_dohsk")
 frame_progress = 0.155708
 
@@ -65,3 +77,15 @@ shape = SubResource("CircleShape2D_pecms")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_68r0m")
 debug_color = Color(0.913965, 0.234011, 0.447263, 0.42)
+
+[node name="Weapon" type="Node2D" parent="."]
+
+[node name="TestPistol" parent="Weapon" instance=ExtResource("3_e7aon")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_juyck")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(1.90735e-06, -1.90735e-06)
+scale = Vector2(0.3125, 0.3125)
+texture = ExtResource("4_8unvu")
