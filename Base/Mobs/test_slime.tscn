@@ -56,7 +56,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="TestSlime" type="CharacterBody2D"]
-z_index = 999
+z_index = 500
 slide_on_ceiling = false
 
 [node name="MobController" parent="." node_paths=PackedStringArray("trigger_area") instance=ExtResource("1_6rp8r")]

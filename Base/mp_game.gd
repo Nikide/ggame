@@ -29,6 +29,7 @@ func spawn_mob():
 	mob.global_position = mapspwn.get_child(randi_range(0,mapspwn.get_child_count() - 1)).global_position
 	var vfx_resp = res_vfx_scene.instantiate()
 	vfx_resp.global_position = mob.global_position
+	mob.name = "mob" + str(Time.get_ticks_msec())
 	$DinObjects.add_child(vfx_resp)
 	$Mobs.add_child(mob)
 func spawn_bullet(from,to,own,dmg):

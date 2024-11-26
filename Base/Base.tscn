@@ -125,6 +125,7 @@ process_priority = 999
 layer = 5
 
 [node name="Loading" type="Control" parent="UI/CanvasLayer"]
+visible = false
 z_index = 20
 layout_mode = 3
 anchors_preset = 15
@@ -256,7 +257,7 @@ horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="UI/CanvasLayer/Menu/MainBtnsCont"]
 layout_mode = 2
-text = "версия 0.002"
+text = "версия 0.003"
 horizontal_alignment = 1
 
 [node name="FindGame" type="Button" parent="UI/CanvasLayer/Menu/MainBtnsCont"]
